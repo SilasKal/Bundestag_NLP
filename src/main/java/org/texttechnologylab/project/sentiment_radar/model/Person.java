@@ -1,5 +1,7 @@
 package org.texttechnologylab.project.sentiment_radar.model;
 
+import org.texttechnologylab.project.sentiment_radar.abstracts.MongoDBDocument;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,27 +9,30 @@ import java.util.Objects;
 /**
  * Enthält Informationen zu Personen.
  */
-public class Person {
-  private String id;
+public class Person extends MongoDBDocument {
+  public static final String MONGO_DB_COLLECTION_NAME = "Personen";
+  private String givenId;
   private String vorname;
   private String nachname;
   private String namenszusatz;
   private String ortszusatz;
   private List<Rede> reden = new ArrayList<>();
-  private List<org.texttechnologylab.project.sentiment_radar.model.Kommentar> kommentare = new ArrayList<>();
-  private Rolle rolle;
+  private List<Kommentar> kommentare = new ArrayList<>();
+  private String rolleKurz;
+  private String rolleName;
   private String titel;
 
   public Person() {
   }
 
-  public Person(String id, String vorname, String nachname, String namenszusatz, String ortszusatz, Rolle rolle, String titel) {
-    this.id = id;
+  public Person(String id, String vorname, String nachname, String namenszusatz, String ortszusatz, String rolleKurz, String rolleName, String titel) {
+    this.givenId = id;
     this.vorname = vorname;
     this.nachname = nachname;
     this.namenszusatz = namenszusatz;
     this.ortszusatz = ortszusatz;
-    this.rolle = rolle;
+    this.rolleKurz = rolleKurz;
+    this.rolleName = rolleName;
     this.titel = titel;
   }
 
@@ -38,7 +43,7 @@ public class Person {
     }
   }
 
-  public void addKommentar(org.texttechnologylab.project.sentiment_radar.model.Kommentar kommentar) {
+  public void addKommentar(Kommentar kommentar) {
     if (kommentar != null) {
       this.kommentare.add(kommentar);
     }
@@ -80,12 +85,12 @@ public class Person {
     this.titel = titel;
   }
 
-  public String getId() {
-    return id;
+  public String getGivenId() {
+    return givenId;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setGivenId(String givenId) {
+    this.givenId = givenId;
   }
 
   public String getVorname() {
@@ -112,20 +117,28 @@ public class Person {
     this.reden = reden;
   }
 
-  public List<org.texttechnologylab.project.sentiment_radar.model.Kommentar> getKommentare() {
+  public List<Kommentar> getKommentare() {
     return kommentare;
   }
 
-  public void setKommentare(List<org.texttechnologylab.project.sentiment_radar.model.Kommentar> kommentare) {
+  public void setKommentare(List<Kommentar> kommentare) {
     this.kommentare = kommentare;
   }
 
-  public Rolle getRolle() {
-    return rolle;
+  public String getRolleKurz() {
+    return this.rolleKurz;
   }
 
-  public void setRolle(Rolle rolle) {
-    this.rolle = rolle;
+  public void setRolleKurz(String rolleKurz) {
+    this.rolleKurz = rolleKurz;
+  }
+
+  public String getRolleName() {
+    return this.rolleName;
+  }
+
+  public void setRolleName(String rolleName) {
+    this.rolleName = rolleName;
   }
 
   @Override
@@ -133,11 +146,11 @@ public class Person {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Person person = (Person) o;
-    return Objects.equals(id, person.id);
+    return Objects.equals(givenId, person.givenId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, vorname, nachname, namenszusatz, ortszusatz, reden, kommentare, rolle, titel);
+    return Objects.hash(givenId, vorname, nachname, namenszusatz, ortszusatz, reden, kommentare, rolleKurz, rolleName, titel);
   }
 }

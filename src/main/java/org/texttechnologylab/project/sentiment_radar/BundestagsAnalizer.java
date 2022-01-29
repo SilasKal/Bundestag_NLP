@@ -1,6 +1,6 @@
 package org.texttechnologylab.project.sentiment_radar;
 
-import org.texttechnologylab.project.sentiment_radar.menu.MainMenu_File_Impl;
+import org.texttechnologylab.project.sentiment_radar.menu.MainMenu_MongoDBImpl_File_Impl;
 import org.texttechnologylab.project.sentiment_radar.model.Sitzung;
 import org.texttechnologylab.project.sentiment_radar.parser.PlenarsitzungParser;
 
@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Der BundestagsAnalizer dient zum Einlesen von Daten und zur Analyse dieser.
+ *
  * @author Philipp Dächert s3391912@stud.uni-frankfurt.de
  * Matrikelnummer: 7550687
  * @version 1.0
@@ -23,7 +24,7 @@ public class BundestagsAnalizer {
     System.out.println("Lade Sitzungen...");
     parseXmls();
     System.out.println("Sitzungen geladen!");
-    MainMenu_File_Impl mainMenu = new MainMenu_File_Impl(sitzungen);
+    MainMenu_MongoDBImpl_File_Impl mainMenu = new MainMenu_MongoDBImpl_File_Impl(sitzungen);
     mainMenu.runMenu();
   }
 
@@ -36,3 +37,5 @@ public class BundestagsAnalizer {
     }
   }
 }
+
+

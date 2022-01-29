@@ -1,5 +1,7 @@
 package org.texttechnologylab.project.sentiment_radar.model;
 
+import org.texttechnologylab.project.sentiment_radar.abstracts.MongoDBDocument;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,7 +9,8 @@ import java.util.Objects;
 /**
  * Kann eine Vielzahl von Reden enthalten und ist einer Sitzung zugeordnet.
  */
-public class Tagesordnungspunkt {
+public class Tagesordnungspunkt extends MongoDBDocument {
+  public static final String MONGO_DB_COLLECTION_NAME = "Tagesordnungspunkte";
   private List<Rede> reden = new ArrayList<>();
   private Sitzung sitzung;
   private String tagesOrdnungsUeberschrift;

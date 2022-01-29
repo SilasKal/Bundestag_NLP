@@ -1,16 +1,16 @@
 package org.texttechnologylab.project.sentiment_radar.menu;
 
 
-import org.texttechnologylab.project.sentiment_radar.abstracts.Menu;
+import org.texttechnologylab.project.sentiment_radar.abstracts.Menu_MongoDB_Impl;
 import org.texttechnologylab.project.sentiment_radar.model.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class RednerMenu_File_Impl extends Menu {
+public class RednerMenu_MongoDBImpl_File_Impl extends Menu_MongoDB_Impl {
   private final int MENU_LENGTH = 3;
 
-  public RednerMenu_File_Impl(List<Sitzung> sitzungen) {
+  public RednerMenu_MongoDBImpl_File_Impl(List<Sitzung> sitzungen) {
     super(sitzungen);
   }
 
@@ -73,13 +73,13 @@ public class RednerMenu_File_Impl extends Menu {
   }
 
   private List<String> getAlleRedner() {
-    return sitzungen.stream()
-        .map(Sitzung::getTagesordnungspunkte).flatMap(List::stream) // Alle Reden
-        .map(Tagesordnungspunkt::getReden).flatMap(List::stream) // Alle Tagesordnungspunkte
-        .map(Rede::getRedner) // alle Redner
-        .map(Person::getName) // Namen der Personen
-        .distinct() // Einzigartig
-        .collect(Collectors.toList()); // In Liste
+      return sitzungen.stream()
+          .map(Sitzung::getTagesordnungspunkte).flatMap(List::stream) // Alle Reden
+          .map(Tagesordnungspunkt::getReden).flatMap(List::stream) // Alle Tagesordnungspunkte
+          .map(Rede::getRedner) // alle Redner
+          .map(Person::getName) // Namen der Personen
+          .distinct() // Einzigartig
+          .collect(Collectors.toList()); // In Liste
   }
 
   private List<String> getRednerFuerFraktion(Fraktion fraktion) {

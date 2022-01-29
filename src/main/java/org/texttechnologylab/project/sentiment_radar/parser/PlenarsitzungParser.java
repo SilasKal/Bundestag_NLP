@@ -169,13 +169,12 @@ public final class PlenarsitzungParser {
         }
       }
     }
-    Rolle rolle = new Rolle(rolleKurz, rolleLang);
     // Parse Fraktion der Person
     Fraktion fraktion = Fraktion.getByNameIgnoreSpacesCaptilization(fraktionskennzeichnung);
     if (fraktion != null) {
-      return new Abgeordneter(id, vorname, nachname, namenszusatz, ortszusatz, rolle, titel, fraktion);
+      return new Abgeordneter(id, vorname, nachname, namenszusatz, ortszusatz, rolleKurz, rolleLang, titel, fraktion);
     }
-    return new Person(id, vorname, nachname, namenszusatz, ortszusatz, rolle, titel);
+    return new Person(id, vorname, nachname, namenszusatz, ortszusatz, rolleKurz, rolleLang, titel);
   }
   // Parse Redner
   private static void parseRednerListe(Document doc) {

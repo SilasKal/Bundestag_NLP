@@ -5,15 +5,15 @@ import java.util.Objects;
 /**
  * Abgeordnete sind Personen und können einer Fraktion angehören
  */
-public class Abgeordneter extends org.texttechnologylab.project.sentiment_radar.model.Person {
-  private org.texttechnologylab.project.sentiment_radar.model.Fraktion fraktion;
+public class Abgeordneter extends Person {
+  private Fraktion fraktion;
 
   public Abgeordneter() {
   }
 
-  public Abgeordneter(String id, String vorname, String nachname, String namenszusatz, String ortszusatz, org.texttechnologylab.project.sentiment_radar.model.Rolle rolle,
-                      String titel, org.texttechnologylab.project.sentiment_radar.model.Fraktion fraktion) {
-    super(id, vorname, nachname, namenszusatz, ortszusatz, rolle, titel);
+  public Abgeordneter(String id, String vorname, String nachname, String namenszusatz, String ortszusatz,
+                      String rolleKurz, String rolleName, String titel, Fraktion fraktion) {
+    super(id, vorname, nachname, namenszusatz, ortszusatz, rolleKurz, rolleName, titel);
     this.fraktion = fraktion;
   }
 
@@ -22,11 +22,11 @@ public class Abgeordneter extends org.texttechnologylab.project.sentiment_radar.
     return super.getName() + " (" + fraktion.getName() + ")";
   }
 
-  public org.texttechnologylab.project.sentiment_radar.model.Fraktion getFraktion() {
+  public Fraktion getFraktion() {
     return fraktion;
   }
 
-  public void setFraktion(org.texttechnologylab.project.sentiment_radar.model.Fraktion fraktion) {
+  public void setFraktion(Fraktion fraktion) {
     this.fraktion = fraktion;
   }
 

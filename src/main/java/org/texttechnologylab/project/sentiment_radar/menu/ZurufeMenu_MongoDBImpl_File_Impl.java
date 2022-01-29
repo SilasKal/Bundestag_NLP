@@ -1,16 +1,16 @@
 package org.texttechnologylab.project.sentiment_radar.menu;
 
 
-import org.texttechnologylab.project.sentiment_radar.abstracts.Menu;
+import org.texttechnologylab.project.sentiment_radar.abstracts.Menu_MongoDB_Impl;
 import org.texttechnologylab.project.sentiment_radar.model.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ZurufeMenu_File_Impl extends Menu {
+public class ZurufeMenu_MongoDBImpl_File_Impl extends Menu_MongoDB_Impl {
   private final int MENU_LENGTH = 4;
 
-  public ZurufeMenu_File_Impl(List<Sitzung> sitzungen) {
+  public ZurufeMenu_MongoDBImpl_File_Impl(List<Sitzung> sitzungen) {
     super(sitzungen);
   }
 
@@ -168,6 +168,7 @@ public class ZurufeMenu_File_Impl extends Menu {
                 if (kom.containsKey(f)) {
                   kom.put(f, kom.get(f) + 1);
                 } else {
+
                   kom.put(f, 1L);
                 }
               });

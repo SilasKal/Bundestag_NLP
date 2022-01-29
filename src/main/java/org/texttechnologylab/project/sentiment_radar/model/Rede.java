@@ -1,5 +1,7 @@
 package org.texttechnologylab.project.sentiment_radar.model;
 
+import org.texttechnologylab.project.sentiment_radar.abstracts.MongoDBDocument;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,11 +10,12 @@ import java.util.Objects;
  * Enthält Informationen zu einer Rede.
  * Kann eine Vielzahl von Kommentaren beinhalten.
  */
-public class Rede {
+public class Rede extends MongoDBDocument {
+  public static final String MONGO_DB_COLLECTION_NAME = "Reden";
   private String text;
-  private org.texttechnologylab.project.sentiment_radar.model.Person redner;
-  private org.texttechnologylab.project.sentiment_radar.model.Tagesordnungspunkt tagesordnungspunkt;
-  private List<org.texttechnologylab.project.sentiment_radar.model.Kommentar> kommentare = new ArrayList<>();
+  private Person redner;
+  private Tagesordnungspunkt tagesordnungspunkt;
+  private List<Kommentar> kommentare = new ArrayList<>();
 
   public String getText() {
     return text;
@@ -22,33 +25,34 @@ public class Rede {
     this.text = text;
   }
 
-  public org.texttechnologylab.project.sentiment_radar.model.Person getRedner() {
+  public Person getRedner() {
     return redner;
   }
 
-  public void setRedner(org.texttechnologylab.project.sentiment_radar.model.Person redner) {
+  public void setRedner(Person redner) {
     this.redner = redner;
   }
 
-  public org.texttechnologylab.project.sentiment_radar.model.Tagesordnungspunkt getTagesordnungspunkt() {
+  public Tagesordnungspunkt getTagesordnungspunkt() {
     return tagesordnungspunkt;
   }
 
-  public void setTagesordnungspunkt(org.texttechnologylab.project.sentiment_radar.model.Tagesordnungspunkt tagesordnungspunkt) {
+  public void setTagesordnungspunkt(Tagesordnungspunkt tagesordnungspunkt) {
     this.tagesordnungspunkt = tagesordnungspunkt;
   }
 
-  public List<org.texttechnologylab.project.sentiment_radar.model.Kommentar> getKommentare() {
+  public List<Kommentar> getKommentare() {
     return kommentare;
   }
 
-  public void setKommentare(List<org.texttechnologylab.project.sentiment_radar.model.Kommentar> kommentare) {
+  public void setKommentare(List<Kommentar> kommentare) {
     this.kommentare = kommentare;
   }
 
-  public void addKommentar(org.texttechnologylab.project.sentiment_radar.model.Kommentar kommentar) {
+  public void addKommentar(Kommentar kommentar) {
     if (kommentar != null) {
       this.kommentare.add(kommentar);
+      kommentar.setRede(this);
     }
   }
 

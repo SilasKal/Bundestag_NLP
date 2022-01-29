@@ -1,7 +1,7 @@
 package org.texttechnologylab.project.sentiment_radar.menu;
 
 
-import org.texttechnologylab.project.sentiment_radar.abstracts.Menu;
+import org.texttechnologylab.project.sentiment_radar.abstracts.Menu_MongoDB_Impl;
 import org.texttechnologylab.project.sentiment_radar.model.Abgeordneter;
 import org.texttechnologylab.project.sentiment_radar.model.Rede;
 import org.texttechnologylab.project.sentiment_radar.model.Sitzung;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 /**
  * Untermenü für Abfragen die "Redner" returnen sollen.
  */
-public class AvgRede_File_Impl extends Menu {
+public class AvgRede_File_Impl extends Menu_MongoDB_Impl {
   private final int MENU_LENGTH = 3;
 
   public AvgRede_File_Impl(List<Sitzung> sitzungen) {
