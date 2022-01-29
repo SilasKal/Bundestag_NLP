@@ -1,0 +1,16 @@
+org\texttechnologylab\project\gruppe71\model\Rede.class
+org\texttechnologylab\project\gruppe71\model\Rolle.class
+org\texttechnologylab\project\gruppe71\model\Sitzung.class
+org\texttechnologylab\project\gruppe71\BundestagsAnalizer.class
+org\texttechnologylab\project\gruppe71\model\Kommentar.class
+org\texttechnologylab\project\gruppe71\model\Tagesordnungspunkt.class
+org\texttechnologylab\project\gruppe71\model\Person.class
+org\texttechnologylab\project\gruppe71\abstracts\Menu.class
+org\texttechnologylab\project\gruppe71\menu\ZurufeMenu_File_Impl.class
+org\texttechnologylab\project\gruppe71\menu\MainMenu_File_Impl.class
+org\texttechnologylab\project\gruppe71\model\Gast.class
+org\texttechnologylab\project\gruppe71\menu\AvgRede_File_Impl.class
+org\texttechnologylab\project\gruppe71\model\Abgeordneter.class
+org\texttechnologylab\project\gruppe71\parser\PlenarsitzungParser.class
+org\texttechnologylab\project\gruppe71\menu\RednerMenu_File_Impl.class
+org\texttechnologylab\project\gruppe71\model\Fraktion.class
