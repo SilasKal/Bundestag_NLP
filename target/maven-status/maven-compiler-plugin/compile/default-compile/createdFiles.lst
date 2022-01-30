@@ -6,6 +6,7 @@ org\texttechnologylab\project\sentiment_radar\model\Fraktion.class
 org\texttechnologylab\project\sentiment_radar\database\TagesordnungspunkteRepository_MongoDB_Impl.class
 org\texttechnologylab\project\sentiment_radar\util\PropertyUtil.class
 org\texttechnologylab\project\sentiment_radar\model\Person.class
+org\texttechnologylab\project\sentiment_radar\parser\docFetch.class
 org\texttechnologylab\project\sentiment_radar\abstracts\MongoDBDocument.class
 org\texttechnologylab\project\sentiment_radar\menu\RednerMenu_MongoDBImpl_File_Impl.class
 org\texttechnologylab\project\sentiment_radar\menu\AvgRede_File_Impl.class

@@ -5,10 +5,15 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Locale;
 
 /**
@@ -18,13 +23,20 @@ import java.util.Locale;
  */
 public final class PlenarsitzungParser {
 
-  public static Sitzung parseXmlFile(String name) {
+  public static void parsePlenarFile() throws IOException, SAXException, ParserConfigurationException, URISyntaxException {
+    File file = new File(PlenarsitzungParser.class.getClassLoader().getResource("dbtplenarprotokoll.dtd").toURI());
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder builder = factory.newDocumentBuilder();
+    Document doc = builder.parse(file);
+    doc.getDocumentElement().normalize();
+
+  }
+  public static Sitzung parseXmlFile(String url) {
     try {
       // Bereite Dokument vor
-      File file = new File(PlenarsitzungParser.class.getClassLoader().getResource("xml/data/" + name + ".xml").toURI());
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
       DocumentBuilder builder = factory.newDocumentBuilder();
-      Document doc = builder.parse(file);
+      Document doc = builder.parse(new URL(url).openStream());
       doc.getDocumentElement().normalize();
 
       // Lese Sitzungsdaten aus

@@ -6,7 +6,10 @@ import java.util.Properties;
 
 public class PropertyUtil {
   private static Properties loadProperties() throws IOException {
+    String appConfigPath = "F:/Uni Programme/3.Semester/PRG/gruppe_7_1_parliamentsentimentradar/src/main/resources/app.properties";
+/*
     String appConfigPath = Thread.currentThread().getContextClassLoader().getResource("app.properties").getPath();
+*/
     Properties appProps = new Properties();
     appProps.load(new FileInputStream(appConfigPath));
     return appProps;

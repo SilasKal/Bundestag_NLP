@@ -1,6 +1,7 @@
 package org.texttechnologylab.project.sentiment_radar.model;
 
 import org.texttechnologylab.project.sentiment_radar.abstracts.MongoDBDocument;
+import org.texttechnologylab.project.sentiment_radar.urlget.ImgUrlGetter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Person extends MongoDBDocument {
   private String rolleKurz;
   private String rolleName;
   private String titel;
-
+  private List<String> bildUrl;
   public Person() {
   }
 
@@ -34,6 +35,8 @@ public class Person extends MongoDBDocument {
     this.rolleKurz = rolleKurz;
     this.rolleName = rolleName;
     this.titel = titel;
+    this.bildUrl = ImgUrlGetter.get_pic_url(vorname, nachname);
+    System.out.println(this.vorname + this.nachname + this.bildUrl);
   }
 
   public void addRede(Rede rede) {
@@ -47,6 +50,14 @@ public class Person extends MongoDBDocument {
     if (kommentar != null) {
       this.kommentare.add(kommentar);
     }
+  }
+
+  public List<String> getBildUrl() {
+    return bildUrl;
+  }
+
+  public void setBildUrl(List<String> bildUrl) {
+    this.bildUrl = bildUrl;
   }
 
   public String getName() {
