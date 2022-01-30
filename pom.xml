@@ -30,15 +30,16 @@
     </repositories>
 
     <dependencies>
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>3.12.7</version>
-        </dependency>
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>2.17.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>3.12.7</version>
         </dependency>
         <dependency>
             <groupId>xerces</groupId>
@@ -126,9 +127,11 @@
             <artifactId>de.tudarmstadt.ukp.dkpro.core.api.lexmorph-asl</artifactId>
             <version>1.10.0</version>
         </dependency>
-
+<!--        <dependency>-->
+<!--            <groupId>org.texttechnologylab.project.Gruppe_7_1</groupId>-->
+<!--            <artifactId>Abschlussprojekt</artifactId>-->
+<!--            <version>1.0-SNAPSHOT</version>-->
+<!--        </dependency>-->
     </dependencies>
-
-
 </project>
 
