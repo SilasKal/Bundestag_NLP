@@ -33,7 +33,7 @@ public class BundestagsAnalizer {
      * Diese Funktion liest alle XML Datein in Resourcen ein
      */
     ArrayList<String> linkListe = new ArrayList<String>(new docFetch().urlCollector());
-    for (int i = 1; i < linkListe.size(); i++) {
+    for (int i = 0; i < linkListe.size(); i++) {
       sitzungen.add(PlenarsitzungParser.parseXmlFile(linkListe.get(i)));
     }
   }
