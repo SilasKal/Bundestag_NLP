@@ -1,11 +1,14 @@
 package org.texttechnologylab.project.sentiment_radar.abstracts;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.texttechnologylab.project.sentiment_radar.database.MongoDBConnectionHandler;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public interface AbstractRepository<T extends MongoDBDocument> {
@@ -26,8 +29,8 @@ public interface AbstractRepository<T extends MongoDBDocument> {
       return null;
     }
     return Optional.ofNullable(getCollection().find(Filters.eq("_id", id)).first())
-        .map(this::getObject)
-        .orElse(null);
+            .map(this::getObject)
+            .orElse(null);
   }
 
   default T persist(T object) {
@@ -61,6 +64,20 @@ public interface AbstractRepository<T extends MongoDBDocument> {
 
   default MongoCollection<Document> getCollection() {
     return MongoDBConnectionHandler.getInstance()
-        .getCollection(getCollectionName());
+            .getCollection(getCollectionName());
+  }
+
+  default List<Document> getCollectionbyName(String collectionname) {
+    List<Document> documentList = new ArrayList<>();
+    MongoCollection collection = MongoDBConnectionHandler.getInstance().getCollection(collectionname);
+    MongoCursor<Document> cursor = collection.find().iterator();
+    try {
+      while (cursor.hasNext()) {
+        documentList.add(cursor.next());
+      }
+    } finally {
+      cursor.close();
+    }
+    return documentList;
   }
 }
