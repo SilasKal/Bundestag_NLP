@@ -26,8 +26,8 @@ public class MongoDBConnectionHandler {
     String password = PropertyUtil.getRemotePassword();
     String port = PropertyUtil.getRemotePort();
 
-
     String uri = "mongodb://" + database + ":" + password + "@" + host + ":" + port + "/" + database + "?authSource=" + user;
+    System.out.println(uri);
     try {
       MongoClient client = MongoClients.create(uri);
       this.db = client.getDatabase(user);
