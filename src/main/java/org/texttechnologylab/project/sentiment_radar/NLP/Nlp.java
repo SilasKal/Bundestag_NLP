@@ -32,8 +32,11 @@ public class Nlp {
     public static void NLPprocess() {
         RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
         List <Document> documentList = redeRepository_mongoDB_.findallRede();
+        int counter = 0;
         for (Document document: documentList) {
+            System.out.println(counter);
             NLP(RedetoJCas(document), document.getObjectId("_id"));
+            counter +=1;
         }
     }
     public static JCas RedetoJCas(Document doc) {
@@ -100,7 +103,7 @@ public class Nlp {
             redeRepository_mongoDB_.updateRedeList(objectId, "perList", PerList);
             redeRepository_mongoDB_.updateRedeList(objectId, "locList", LocList);
             redeRepository_mongoDB_.updateRedeList(objectId, "tokenList", TokenList);
-
+            redeRepository_mongoDB_.updateRedeList(objectId, "posList", PosList);
 
         } catch (ResourceInitializationException | AnalysisEngineProcessException e) {
             e.printStackTrace();
