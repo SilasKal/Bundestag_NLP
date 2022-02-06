@@ -52,6 +52,7 @@ public class RedeRepository_MongoDB_Impl implements AbstractRepository<Rede> {
     document.append("text", rede.getText());
     document.append("redner_id", Optional.ofNullable(rede.getRedner()).map(Person::getId).orElse(null));
     document.append("tagesordnungspunkt_id", Optional.ofNullable(rede.getTagesordnungspunkt()).map(Tagesordnungspunkt::getId).orElse(null));
+    document.append("datum", rede.getDatum());
     return document;
   }
 

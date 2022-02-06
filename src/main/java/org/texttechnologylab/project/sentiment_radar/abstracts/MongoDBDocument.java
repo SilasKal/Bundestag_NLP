@@ -12,4 +12,5 @@ public abstract class MongoDBDocument {
   public void setId(ObjectId id) {
     this.id = id;
   }
+
 }

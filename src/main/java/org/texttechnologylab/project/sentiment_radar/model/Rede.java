@@ -14,8 +14,15 @@ public class Rede extends MongoDBDocument {
   public static final String MONGO_DB_COLLECTION_NAME = "Reden";
   private String text;
   private Person redner;
+  private String datum;
   private Tagesordnungspunkt tagesordnungspunkt;
   private List<Kommentar> kommentare = new ArrayList<>();
+
+  public String getDatum() {
+    return datum;
+  }
+
+  public void setDatum(String datum) {this.datum = datum;}
 
   public String getText() {
     return text;

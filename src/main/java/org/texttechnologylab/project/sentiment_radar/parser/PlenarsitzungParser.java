@@ -51,7 +51,7 @@ public final class PlenarsitzungParser {
       for (int i = 0; i < tagesordnungspunkte.getLength(); i++) {
         Node tagesordnungspunkt = tagesordnungspunkte.item(i);
         if (tagesordnungspunkt.getNodeType() == Node.ELEMENT_NODE) {
-          sitzung.addTagesordnungspunkt(parseTagesordnungspunkt((Element) tagesordnungspunkt));
+          sitzung.addTagesordnungspunkt(parseTagesordnungspunkt((Element) tagesordnungspunkt, datum));
         }
       }
       return sitzung;
@@ -62,7 +62,7 @@ public final class PlenarsitzungParser {
     return null;
   }
 
-  private static Tagesordnungspunkt parseTagesordnungspunkt(Element topElement) {
+  private static Tagesordnungspunkt parseTagesordnungspunkt(Element topElement, String datum) {
     Tagesordnungspunkt top = new Tagesordnungspunkt();
 
     top.setTagesOrdnungsUeberschrift(topElement.getAttribute("top-id"));
@@ -71,13 +71,13 @@ public final class PlenarsitzungParser {
     for (int j = 0; j < reden.getLength(); j++) {
       Node nRede = reden.item(j);
       if (nRede.getNodeType() == Node.ELEMENT_NODE) {
-        top.addRede(parseRede((Element) nRede));
+        top.addRede(parseRede((Element) nRede, datum));;
       }
     }
     return top;
   }
 
-  private static Rede parseRede(Element redeElement) {
+  private static Rede parseRede(Element redeElement, String datum) {
     Rede rede = new Rede();
 
     // Setze Redner
@@ -97,6 +97,7 @@ public final class PlenarsitzungParser {
         }
       }
     }
+    rede.setDatum(datum);
     rede.setText(redenText.toString());
 
     // Hole alle Kommentare der Rede
@@ -107,6 +108,7 @@ public final class PlenarsitzungParser {
         rede.addKommentar(parseKommentar((Element) nKommentar));
       }
     }
+    // Setzt Datum einer Rede auf Datum der Sitzung
     return rede;
   }
   private static Kommentar parseKommentar(Element kommentarElement) {
