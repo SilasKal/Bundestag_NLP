@@ -1,13 +1,9 @@
 package org.texttechnologylab.project.sentiment_radar.rest;
-import net.bytebuddy.description.ByteCodeElement;
+
 import org.bson.Document;
-import org.elasticsearch.client.license.LicensesStatus;
 import org.json.simple.JSONObject;
 import org.texttechnologylab.project.sentiment_radar.database.RedeRepository_MongoDB_Impl;
 
-import javax.json.Json;
-import javax.print.Doc;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 import static spark.Spark.*;
@@ -16,21 +12,12 @@ import static spark.Spark.*;
 
 public class RestSchnittstelle {
     public static void main(String[] args) {
-        get("/token/all", (req, res) -> {
-            return getAllTokenwithCount();
-        });
-        get("/speeches/all", (req, res) -> {
-            return getAllSpeeches();
-        });
-        get("/ne/all", (req, res) -> {
-            return getAllNEwithCount();
-        });
-        get("/sentiment/all", (req, res) -> {
-            return getAllSentimentwithCount();
-        });
-        get("/pos/all", (req, res) -> {
-            return getAllPoswithCount();
-        });
+        get("/token/all", (req, res) -> getAllTokenwithCount());
+        get("/speeches/all", (req, res) -> getAllSpeeches());
+        get("/ne/all", (req, res) -> getAllNEwithCount());
+        get("/sentiment/all", (req, res) -> getAllSentimentwithCount());
+        get("/pos/all", (req, res) -> getAllPoswithCount());
+        get("/speeches/count", (req, res) -> getSpeechesCount());
 
     }
     public static List<String> getAllSpeeches() {
@@ -42,7 +29,14 @@ public class RestSchnittstelle {
         }
         return JsonList;
     }
-    public static List<String> getAllTokenwithCount() {
+    public static JSONObject getSpeechesCount() {
+        RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
+        List<Document> RedeList = redeRepository_mongoDB_.findallRede();
+        JSONObject JSONfinal = new JSONObject();
+        JSONfinal.put("count", RedeList.size());
+        return JSONfinal;
+    }
+    public static JSONObject getAllTokenwithCount() {
         RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
         List<Document> RedeList = redeRepository_mongoDB_.findallRede();
         List<String> TokenList = new ArrayList<>();
@@ -53,12 +47,14 @@ public class RestSchnittstelle {
                 //System.out.println("no TokenList");
             }
         }
+        System.out.println("finished List");
         return processToken(TokenList);
     }
-    public static List<String> processToken(List<String> tokenList) {
+    public static JSONObject processToken(List<String> tokenList) {
+        ArrayList<JSONObject> TokenJsonList = new ArrayList<>();
+        JSONObject TokenJsonFinal = new JSONObject();
         HashMap<String, Integer> tokenMap = new HashMap<>();
-        List<Document> tokenCount = new ArrayList<>();
-        List<String> JsonToken = new ArrayList<>();
+        JSONObject currJson = new JSONObject();
         for (String string:tokenList) {
             if (!tokenMap.containsKey(string)) {
                 tokenMap.put(string, 1);
@@ -66,15 +62,20 @@ public class RestSchnittstelle {
                 tokenMap.replace(string, tokenMap.get(string) + 1);
             }
         }
-        tokenMap.entrySet().stream().sorted((k1, k2) -> -k1.getValue().compareTo(k2.getValue()))
-                .forEach(k -> tokenCount.add(new Document().append("token", k.getKey()).append("count" , k.getValue())));
-        for (int i = 0; i < tokenCount.size(); i++) {
-            JsonToken.add(tokenCount.get(i).toJson());
-        };
-        return JsonToken;
+        Iterator it = tokenMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            currJson = new JSONObject();
+            currJson.put("token", pair.getKey());
+            currJson.put("count", pair.getValue());
+            TokenJsonList.add(currJson);
+            it.remove();
+        }
+        TokenJsonFinal.put("result", TokenJsonList);
+        return TokenJsonFinal;
 
     }
-    public static List<String> getAllNEwithCount() {
+    public static JSONObject getAllNEwithCount() {
         RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
         List<Document> RedeList = redeRepository_mongoDB_.findallRede();
         List<String> miscList = new ArrayList<>();
@@ -93,47 +94,50 @@ public class RestSchnittstelle {
         }
         return processNE(miscList, orgList, perList, locList);
     }
-    public static List<String> processNE(List<String> miscList, List<String> orgList, List<String> perList, List<String> locList) {
+    public static JSONObject processNE(List<String> miscList, List<String> orgList, List<String> perList, List<String> locList) {
         List<List<String>> entityList = new ArrayList<>();
-        List<String> NEJson = new ArrayList<>();
+        JSONObject currJson = new JSONObject();
+        ArrayList<JSONObject> NEjson = new ArrayList<>();
+        JSONObject NEJsonList = new JSONObject();
         entityList.add(miscList);
         entityList.add(orgList);
         entityList.add(perList);
         entityList.add(locList);
-        Collections.sort(entityList, new Comparator<List>() {
-            public int compare(List a1, List a2) {
-                return a2.size() - a1.size();
-            }
-        });
+        entityList.sort((Comparator<List>) (a1, a2) -> a2.size() - a1.size());
         int counter2 = 0;
         for (List<String> list : entityList) {
             if (counter2 == 0) {
-                String Json = new Document().append("type", "MISC").append("count", list.size()).toJson();
-                NEJson.add(Json);
-                //System.out.println("MISC mit " + list.size() + " Elementen. ");
+                currJson.put("type", "MISC");
+                currJson.put("count", list.size());
+                NEjson.add(currJson);
+
             }
             if (counter2 == 1) {
-                String Json = new Document().append("type", "ORG").append("count", list.size()).toJson();
-                NEJson.add(Json);
-                //System.out.println("ORG mit " + list.size() + " Elementen. ");
+                currJson = new JSONObject();
+                currJson.put("type", "ORG");
+                currJson.put("count", list.size());
+                NEjson.add(currJson);
             }
             if (counter2 == 2) {
-                String Json = new Document().append("type", "PER").append("count", list.size()).toJson();
-                NEJson.add(Json);
-                //System.out.println("PER mit " + list.size() + " Elementen. ");
+                currJson = new JSONObject();
+                currJson.put("type", "PER");
+                currJson.put("count", list.size());
+                NEjson.add(currJson);
             }
             if (counter2 == 3) {
-                String Json = new Document().append("type", "LOC").append("count", list.size()).toJson();
-                NEJson.add(Json);
-                //System.out.println("LOC mit " + list.size() + " Elementen. ");
+                currJson = new JSONObject();
+                currJson.put("type", "LOC");
+                currJson.put("count", list.size());
+                NEjson.add(currJson);
             }
             counter2 += 1;
         }
-        return NEJson;
+        NEJsonList.put("result", NEjson);
+        return NEJsonList;
 
 
     }
-    public static List<String> getAllSentimentwithCount() {
+    public static JSONObject getAllSentimentwithCount() {
         RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
         List<Document> RedeList = redeRepository_mongoDB_.findallRede();
         List<Double> SentimentList = new ArrayList<>();
@@ -148,11 +152,11 @@ public class RestSchnittstelle {
         }
         return processSentiment(SentimentList);
     }
-    public static List<String> processSentiment(List<Double> SentimentList) {
+    public static JSONObject processSentiment(List<Double> SentimentList) {
         HashMap<String, Integer> sentimentMap = new HashMap<>();
-        List<Document> SentimentCount = new ArrayList<>();
-        List<String> SentimentJson = new ArrayList<>();
-        System.out.println(SentimentList);
+        List<JSONObject> SentimentJsonList = new ArrayList<>();
+        JSONObject currJson = new JSONObject();
+        JSONObject finalJSON = new JSONObject();
         for (Double sentiment : SentimentList) {
             if (!sentimentMap.containsKey(sentiment.toString())) {
                 sentimentMap.put(sentiment.toString(), 1);
@@ -160,14 +164,19 @@ public class RestSchnittstelle {
                 sentimentMap.replace(sentiment.toString(), sentimentMap.get(sentiment.toString()) + 1);
             }
         }
-        sentimentMap.entrySet().stream().sorted((k1, k2) -> -k1.getValue().compareTo(k2.getValue()))
-                .forEach(k -> SentimentCount.add(new Document().append("sentiment", k.getKey()).append("count", k.getValue())));
-        for (int i = 0; i < SentimentCount.size(); i++) {
-            SentimentJson.add(SentimentCount.get(i).toJson());
+        Iterator it = sentimentMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            currJson = new JSONObject();
+            currJson.put("sentiment", pair.getKey());
+            currJson.put("count", pair.getValue());
+            SentimentJsonList.add(currJson);
+            it.remove();
         }
-        return SentimentJson;
+        finalJSON.put("result", SentimentJsonList);
+        return finalJSON;
     }
-    public static List<String> getAllPoswithCount() {
+    public static JSONObject getAllPoswithCount() {
         RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
         List<Document> RedeList = redeRepository_mongoDB_.findallRede();
         List<String> PosList = new ArrayList<>();
@@ -180,24 +189,30 @@ public class RestSchnittstelle {
         }
         return processPos(PosList);
     }
-    public static List<String> processPos(List<String> PosList) {
-        HashMap<String, Integer> tokenMap = new HashMap<>();
-        List<Document> Poscount = new ArrayList<>();
+    public static JSONObject processPos(List<String> PosList) {
+        HashMap<String, Integer> posMap = new HashMap<>();
         List<String> JsonPos = new ArrayList<>();
+        JSONObject currJson = new JSONObject();
+        JSONObject finalJSON = new JSONObject();
+        List<JSONObject> POSJSONList = new ArrayList<>();
         for (String string : PosList) {
-            if (!tokenMap.containsKey(string)) {
-                tokenMap.put(string, 1);
+            if (!posMap.containsKey(string)) {
+                posMap.put(string, 1);
             } else {
-                tokenMap.replace(string, tokenMap.get(string) + 1);
+                posMap.replace(string, posMap.get(string) + 1);
             }
         }
-        tokenMap.entrySet().stream().sorted((k1, k2) -> -k1.getValue().compareTo(k2.getValue()))
-                .forEach(k -> Poscount.add(new Document().append("pos", k.getKey()).append("count", k.getValue())));
-        for (int i = 0; i < Poscount.size(); i++) {
-            JsonPos.add(Poscount.get(i).toJson());
+        Iterator it = posMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            currJson = new JSONObject();
+            currJson.put("pos", pair.getKey());
+            currJson.put("count", pair.getValue());
+            POSJSONList.add(currJson);
+            it.remove();
         }
-        ;
-        return JsonPos;
+        finalJSON.put("result", POSJSONList);
+        return finalJSON;
     }
 
 }
