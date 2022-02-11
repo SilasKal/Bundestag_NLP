@@ -24,10 +24,10 @@ public class RedeRepository_MongoDB_Impl implements AbstractRepository<Rede> {
     }
     return reden;
   }  
-  public List<Rede> findByRednerId(ObjectId rednerId) {
-    List<Rede> reden = new ArrayList<>();
-    for (Document document : getCollection().find(Filters.eq("redner_id", rednerId))) {
-      reden.add(getObject(document));
+  public List<Document> findByRednerId(ObjectId rednerId) {
+    List<Document> reden = new ArrayList<>();
+    for (Document document:getCollectionbyName2("Reden").find(Filters.eq("redner_id", rednerId))) {
+      reden.add(document);
     }
     return reden;
   }
@@ -36,10 +36,10 @@ public class RedeRepository_MongoDB_Impl implements AbstractRepository<Rede> {
     List <Document> redeList = getCollectionbyName("Reden");
     return redeList;
   }
-  public List<Rede> findByRedeId(ObjectId redeId) {
-    List<Rede> reden = new ArrayList<>();
-    for (Document document : getCollection().find(Filters.eq("_id", redeId))) {
-      reden.add(getObject(document));
+  public List<Document> findByRedeId(ObjectId redeId) {
+    List<Document> reden = new ArrayList<>();
+    for (Document document : getCollectionbyName2("Reden").find(Filters.eq("_id", redeId))) {
+      reden.add(document);
     }
     return reden;
   }

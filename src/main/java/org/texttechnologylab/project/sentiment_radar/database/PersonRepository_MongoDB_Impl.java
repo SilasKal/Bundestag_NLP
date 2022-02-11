@@ -25,7 +25,7 @@ public class PersonRepository_MongoDB_Impl implements AbstractRepository<Person>
   }
   public List<Person> findPersonByFraction(String fraction) {
     List<Person> personen = new ArrayList<>();
-    for (Document document : getCollection().find(Filters.eq("fraction", fraction))) {
+    for (Document document : getCollection().find(Filters.eq("fraktion", fraction))) {
       personen.add(getObject(document));
     }
     return personen;
