@@ -8,6 +8,8 @@ import org.texttechnologylab.project.sentiment_radar.model.Abgeordneter;
 import org.texttechnologylab.project.sentiment_radar.model.Fraktion;
 import org.texttechnologylab.project.sentiment_radar.model.Person;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class PersonRepository_MongoDB_Impl implements AbstractRepository<Person> {
@@ -21,7 +23,13 @@ public class PersonRepository_MongoDB_Impl implements AbstractRepository<Person>
             .first())
         .map(this::getObject);
   }
-
+  public List<Person> findPersonByFraction(String fraction) {
+    List<Person> personen = new ArrayList<>();
+    for (Document document : getCollection().find(Filters.eq("fraction", fraction))) {
+      personen.add(getObject(document));
+    }
+    return personen;
+  }
   @Override
   public String getCollectionName() {
     return Person.MONGO_DB_COLLECTION_NAME;

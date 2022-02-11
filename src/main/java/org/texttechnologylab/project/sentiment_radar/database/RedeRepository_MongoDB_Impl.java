@@ -23,7 +23,15 @@ public class RedeRepository_MongoDB_Impl implements AbstractRepository<Rede> {
       reden.add(getObject(document));
     }
     return reden;
+  }  
+  public List<Rede> findByRednerId(ObjectId rednerId) {
+    List<Rede> reden = new ArrayList<>();
+    for (Document document : getCollection().find(Filters.eq("redner_id", rednerId))) {
+      reden.add(getObject(document));
+    }
+    return reden;
   }
+
   public List<Document> findallRede() {
     List <Document> redeList = getCollectionbyName("Reden");
     return redeList;
