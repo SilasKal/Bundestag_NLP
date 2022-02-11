@@ -8,7 +8,12 @@ import org.texttechnologylab.project.sentiment_radar.model.Rede;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ObjectByFraction {
+public class TextByFraction {
+  /**
+   * Function to get the text of all speeches from one fraction
+   * @param fraction
+   * @return List<String>Rede.text</String>
+   */
   public List<String> findSpeechByFraction(String fraction) {
     PersonRepository_MongoDB_Impl personRepository_mongoDB_ = new PersonRepository_MongoDB_Impl();
     List<Person> personen = personRepository_mongoDB_.findPersonByFraction(fraction);
