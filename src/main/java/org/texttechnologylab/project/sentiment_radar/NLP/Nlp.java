@@ -26,6 +26,9 @@ import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDesc
 
 
 public class Nlp {
+        /**
+         * Getting NLP data from speeches
+         */
     public static void main(String[] args) {
         NLPprocess();
     }

@@ -9,18 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Der BundestagsAnalizer dient zum Einlesen von Daten und zur Analyse dieser.
+ * The BundestagsdAnalizer downloads and analyses minutes of Bundestags meetings.
  *
  * @author Philipp Dächert s3391912@stud.uni-frankfurt.de
  * Matrikelnummer: 7550687
- * @version 1.0
+ * @version 1.3
  */
 public class BundestagsAnalizer {
 
   private static final List<Sitzung> sitzungen = new ArrayList<>();
 
   public static void main(String[] args) throws Exception {
-    System.out.println("\t\tBundestagsAnalizer von Philipp Dächert\n\t\tMatrikelnummer: 7550687");
+    System.out.println("\t\tBundestagsAnalizer von\n\t\t Philipp Dächert\n\t\t\tMatrikelnummer: 7550687" +
+        "\n\t\t Silas Kalinowski\n\t\t\tMatrikelnummer: 7417739\n\t\t Ben Schäfer\n\t\t\tMatrikelnummer: 7509560");
     System.out.println("Lade Sitzungen...");
     parseXmls();
     System.out.println("Sitzungen geladen!");

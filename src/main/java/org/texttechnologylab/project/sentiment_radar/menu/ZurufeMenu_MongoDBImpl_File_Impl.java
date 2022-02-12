@@ -8,6 +8,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ZurufeMenu_MongoDBImpl_File_Impl extends Menu_MongoDB_Impl {
+  /**
+   * Submenu to specify a request regarding comments.
+   */
   private final int MENU_LENGTH = 4;
 
   public ZurufeMenu_MongoDBImpl_File_Impl(List<Sitzung> sitzungen) {

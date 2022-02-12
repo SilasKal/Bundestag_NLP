@@ -11,7 +11,16 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ImgUrlGetter {
+  /**
+   *
+   * @param first_name
+   * @param last_name
+   * @return
+   */
   public static List<String> get_pic_url(String first_name, String last_name) {
+    /**
+     * @return picture URL
+     */
     last_name = "Lindh";
     first_name = "Helge";
     String website = "https://bilddatenbank.bundestag.de/search/picture-result?filterQuery%5Bname%5D%5B%5D=" +
