@@ -39,6 +39,13 @@ public class RedeRepository_MongoDB_Impl implements AbstractRepository<Rede> {
     }
     return reden;
   }
+  public Integer findByRednerIdCount(ObjectId rednerId) {
+    int counter = 0;
+    for (Document document : getCollectionbyName2("Reden").find(Filters.eq("redner_id", rednerId))) {
+      counter += 1;
+    }
+    return counter;
+  }
 
   public List<Document> findallRede() {
     List <Document> redeList = getCollectionbyName("Reden");

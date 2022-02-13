@@ -19,14 +19,28 @@ public class PersonRepository_MongoDB_Impl implements AbstractRepository<Person>
       return Optional.empty();
     }
     return Optional.ofNullable(getCollection()
-            .find(Filters.eq("given_id", givenId))
-            .first())
-        .map(this::getObject);
+                    .find(Filters.eq("given_id", givenId))
+                    .first())
+            .map(this::getObject);
   }
   public List<Person> findPersonByFraction(String fraction) {
     List<Person> personen = new ArrayList<>();
     for (Document document : getCollection().find(Filters.eq("fraktion", fraction))) {
       personen.add(getObject(document));
+    }
+    return personen;
+  }
+  public List<Document> findPersonByFractionDocument(String fraction) {
+    List<Document> personen = new ArrayList<>();
+    for (Document document : getCollection().find(Filters.eq("fraktion", fraction))) {
+      personen.add(document);
+    }
+    return personen;
+  }
+  public List<Document> findAllPersonDocument() {
+    List<Document> personen = new ArrayList<>();
+    for (Document document : getCollection().find()) {
+      personen.add(document);
     }
     return personen;
   }
@@ -46,8 +60,6 @@ public class PersonRepository_MongoDB_Impl implements AbstractRepository<Person>
     document.append("rolle_kurz", person.getRolleKurz());
     document.append("rolle_name", person.getRolleName());
     document.append("titel", person.getTitel());
-    document.append("bild_url", person.getBildUrl());
-    document.append("rede_Count", person.getRedeCount());
     String fraktion = null;
     if (person instanceof Abgeordneter) {
       fraktion = ((Abgeordneter) person).getFraktion().name();

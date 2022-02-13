@@ -1,5 +1,6 @@
 package org.texttechnologylab.project.sentiment_radar.rest;
 
+import org.apache.logging.log4j.core.pattern.AbstractStyleNameConverter;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.json.simple.JSONObject;
@@ -60,13 +61,64 @@ public class RestSchnittstelle {
         });
         get("/speaker/:fraktion", (req, res) ->  {
             if (req.params(":fraktion").equals("all")) {
-                return "hi";  // TODO alle Redner mit redencount url und name
+                return findSpeakerbyFraction("");
             }
-            return "hallo"; // TODO redner nach fraktion mit redencount url und name
+            return findSpeakerbyFraction(req.params(":fraktion"));
         });
         enableCORS("*","*","*");  // enables hosting server and making client requests
     }
-
+    public static JSONObject findSpeakerbyFraction(String fraktion) {
+        if (fraktion.equals("")) {
+            PersonRepository_MongoDB_Impl personRepository_mongoDB_ = new PersonRepository_MongoDB_Impl();
+            List<Document> personen = personRepository_mongoDB_.findAllPersonDocument();
+            JSONObject curr_Json = new JSONObject();
+            List<JSONObject> JsonList = new ArrayList<>();
+            JSONObject finalJson = new JSONObject();
+            RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
+            for (Document document:personen) {
+                try {
+                    curr_Json = new JSONObject();
+                    curr_Json.put("name", document.getString("vorname") + " " + document.getString("nachname"));
+                    curr_Json.put("url", document.getList("url", String.class).get(0));
+                    curr_Json.put("count", redeRepository_mongoDB_.findByRednerIdCount(document.getObjectId("_id")));
+                    JsonList.add(curr_Json);
+                } catch (NullPointerException e) {
+                    curr_Json = new JSONObject();
+                    curr_Json.put("name", document.getString("vorname") + " " + document.getString("nachname"));
+                    curr_Json.put("url", "no_picture");
+                    curr_Json.put("count", redeRepository_mongoDB_.findByRednerIdCount(document.getObjectId("_id")));
+                    JsonList.add(curr_Json);
+                }
+            }
+            finalJson.put("result", JsonList);
+            return finalJson;
+        }else {
+            System.out.println("Die fraktion "+ fraktion + "wird gesucht");
+            PersonRepository_MongoDB_Impl personRepository_mongoDB_ = new PersonRepository_MongoDB_Impl();
+            List<Document> personen = personRepository_mongoDB_.findPersonByFractionDocument(fraktion);
+            JSONObject curr_Json = new JSONObject();
+            List<JSONObject> JsonList = new ArrayList<>();
+            JSONObject finalJson = new JSONObject();
+            RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
+            for (Document document:personen) {
+                try {
+                    curr_Json = new JSONObject();
+                    curr_Json.put("name", document.getString("vorname") + " " + document.getString("nachname"));
+                    curr_Json.put("url", document.getList("url", String.class).get(0));
+                    curr_Json.put("count", redeRepository_mongoDB_.findByRednerIdCount(document.getObjectId("_id")));
+                    JsonList.add(curr_Json);
+                }catch (NullPointerException e){
+                    curr_Json = new JSONObject();
+                    curr_Json.put("name", document.getString("vorname") + " " + document.getString("nachname"));
+                    curr_Json.put("url", "no_picture");
+                    curr_Json.put("count", redeRepository_mongoDB_.findByRednerIdCount(document.getObjectId("_id")));
+                    JsonList.add(curr_Json);
+                }
+            }
+            finalJson.put("result", JsonList);
+            return finalJson;
+        }
+    }
     public static List<Document> findSpeechByFraction(String fraktion) {
         if (fraktion.equals("")) {
             RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
@@ -99,24 +151,24 @@ public class RestSchnittstelle {
         return JsonList;
     }
     public static JSONObject getSpeechesCount(String fraktion) {
-            List<Document> RedeList = findSpeechByFraction(fraktion);
-            JSONObject JSONfinal = new JSONObject();
-            JSONfinal.put("count", RedeList.size());
-            return JSONfinal;
+        List<Document> RedeList = findSpeechByFraction(fraktion);
+        JSONObject JSONfinal = new JSONObject();
+        JSONfinal.put("count", RedeList.size());
+        return JSONfinal;
     }
     public static JSONObject getAllTokenwithCount(String fraktion) {
-            RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
-            List<Document> RedeList = findSpeechByFraction(fraktion);
-            List<String> TokenList = new ArrayList<>();
-            for (Document document: RedeList) {
-                try {
-                    TokenList.addAll(document.getList("tokenList", String.class));
-                }catch (Exception e) {
-                    //System.out.println("no TokenList");
-                }
+        RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
+        List<Document> RedeList = findSpeechByFraction(fraktion);
+        List<String> TokenList = new ArrayList<>();
+        for (Document document: RedeList) {
+            try {
+                TokenList.addAll(document.getList("tokenList", String.class));
+            }catch (Exception e) {
+                //System.out.println("no TokenList");
             }
-            System.out.println("finished List");
-            return processToken(TokenList);
+        }
+        System.out.println("finished List");
+        return processToken(TokenList);
     }
     public static JSONObject processToken(List<String> tokenList) {
         ArrayList<JSONObject> TokenJsonList = new ArrayList<>();
@@ -144,22 +196,22 @@ public class RestSchnittstelle {
 
     }
     public static JSONObject getAllNEwithCount(String fraktion) {
-            List<Document> RedeList = findSpeechByFraction(fraktion);
-            List<String> miscList = new ArrayList<>();
-            List<String> orgList = new ArrayList<>();
-            List<String> perList = new ArrayList<>();
-            List<String> locList = new ArrayList<>();
-            for (Document document: RedeList) {
-                try {
-                    miscList.addAll(document.getList("miscList", String.class));
-                    orgList.addAll(document.getList("orgList", String.class));
-                    perList.addAll(document.getList("perList", String.class));
-                    locList.addAll(document.getList("locList", String.class));
-                }catch (Exception e) {
-                    //System.out.println("no NLP data");
-                }
+        List<Document> RedeList = findSpeechByFraction(fraktion);
+        List<String> miscList = new ArrayList<>();
+        List<String> orgList = new ArrayList<>();
+        List<String> perList = new ArrayList<>();
+        List<String> locList = new ArrayList<>();
+        for (Document document: RedeList) {
+            try {
+                miscList.addAll(document.getList("miscList", String.class));
+                orgList.addAll(document.getList("orgList", String.class));
+                perList.addAll(document.getList("perList", String.class));
+                locList.addAll(document.getList("locList", String.class));
+            }catch (Exception e) {
+                //System.out.println("no NLP data");
             }
-            return processNE(miscList, orgList, perList, locList);
+        }
+        return processNE(miscList, orgList, perList, locList);
     }
     public static JSONObject processNE(List<String> miscList, List<String> orgList, List<String> perList, List<String> locList) {
         List<List<String>> entityList = new ArrayList<>();
@@ -204,18 +256,18 @@ public class RestSchnittstelle {
 
     }
     public static JSONObject getAllSentimentwithCount(String fraktion) {
-            List<Document> RedeList = findSpeechByFraction(fraktion);
-            List<Double> SentimentList = new ArrayList<>();
-            for (Document document: RedeList) {
-                try {
-                    if (!document.getDouble("sentiment").equals(null)) {
-                        SentimentList.add(document.getDouble("sentiment"));
-                    }
-                }catch (Exception e) {
-                    //System.out.println("no NLP data");
+        List<Document> RedeList = findSpeechByFraction(fraktion);
+        List<Double> SentimentList = new ArrayList<>();
+        for (Document document: RedeList) {
+            try {
+                if (!document.getDouble("sentiment").equals(null)) {
+                    SentimentList.add(document.getDouble("sentiment"));
                 }
+            }catch (Exception e) {
+                //System.out.println("no NLP data");
             }
-            return processSentiment(SentimentList);
+        }
+        return processSentiment(SentimentList);
     }
     public static JSONObject processSentiment(List<Double> SentimentList) {
         HashMap<String, Integer> sentimentMap = new HashMap<>();
@@ -242,16 +294,16 @@ public class RestSchnittstelle {
         return finalJSON;
     }
     public static JSONObject getAllPoswithCount(String fraktion) {
-            List<Document> RedeList = findSpeechByFraction(fraktion);
-            List<String> PosList = new ArrayList<>();
-            for (Document document: RedeList) {
-                try {
-                    PosList.addAll(document.getList("posList", String.class));
-                }catch (Exception e) {
-                    //System.out.println("no posList");
-                }
+        List<Document> RedeList = findSpeechByFraction(fraktion);
+        List<String> PosList = new ArrayList<>();
+        for (Document document: RedeList) {
+            try {
+                PosList.addAll(document.getList("posList", String.class));
+            }catch (Exception e) {
+                //System.out.println("no posList");
             }
-            return processPos(PosList);
+        }
+        return processPos(PosList);
     }
     public static JSONObject processPos(List<String> PosList) {
         HashMap<String, Integer> posMap = new HashMap<>();
