@@ -8,6 +8,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class RednerMenu_MongoDBImpl_File_Impl extends Menu_MongoDB_Impl {
+  /**
+   * Submenu to specify a requests regarding speakers
+   */
   private final int MENU_LENGTH = 3;
 
   public RednerMenu_MongoDBImpl_File_Impl(List<Sitzung> sitzungen) {

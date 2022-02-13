@@ -9,6 +9,9 @@ import org.texttechnologylab.project.sentiment_radar.model.Tagesordnungspunkt;
 import java.util.List;
 
 public class MainMenu_MongoDBImpl_File_Impl extends Menu_MongoDB_Impl {
+  /**
+   * This Class contains functions to run a menu, in which the user can choose options.
+   */
   private final int MENU_LENGTH = 4;
 
   public MainMenu_MongoDBImpl_File_Impl(List<Sitzung> sitzungen) {
@@ -56,6 +59,9 @@ public class MainMenu_MongoDBImpl_File_Impl extends Menu_MongoDB_Impl {
   }
 
   private void upload() {
+    /**
+     * uploads all data to mongoDB
+     */
     SitzungRepository_MongoDB_Impl sitzungRepository = new SitzungRepository_MongoDB_Impl();
     TagesordnungspunkteRepository_MongoDB_Impl topRepository = new TagesordnungspunkteRepository_MongoDB_Impl();
     PersonRepository_MongoDB_Impl personRepository = new PersonRepository_MongoDB_Impl();
