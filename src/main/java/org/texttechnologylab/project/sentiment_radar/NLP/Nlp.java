@@ -40,6 +40,13 @@ public class Nlp {
             System.out.println(counter);
             NLP(RedetoJCas(document), document.getObjectId("_id"));
             counter +=1;
+//            if (counter >= 5000) {
+//                System.out.println(counter);
+//                NLP(RedetoJCas(document), document.getObjectId("_id"));
+//                counter +=1;
+//            }
+//            System.out.println(counter);
+//            counter +=1;
         }
     }
     public static JCas RedetoJCas(Document doc) {
