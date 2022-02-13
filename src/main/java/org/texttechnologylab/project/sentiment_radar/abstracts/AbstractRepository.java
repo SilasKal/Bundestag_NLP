@@ -45,7 +45,12 @@ public interface AbstractRepository<T extends MongoDBDocument> {
     object.setId(document.get("_id", ObjectId.class));
     return object;
   }
-
+  default void aggregate(List<Document> documentList) {
+    getCollection().aggregate(documentList);
+  }
+  default int count(String collectionname) {
+    return getCollectionbyName(collectionname).size();
+  }
   default T update(T object) {
     if (object == null) {
       return null;
