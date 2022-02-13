@@ -22,7 +22,6 @@ public class Person extends MongoDBDocument {
   private String rolleKurz;
   private String rolleName;
   private String titel;
-  private List<String> bildUrl = new ArrayList<>();
   private Integer redeCount = 0;
 
   public Person() {
@@ -37,8 +36,6 @@ public class Person extends MongoDBDocument {
     this.rolleKurz = rolleKurz;
     this.rolleName = rolleName;
     this.titel = titel;
-    this.bildUrl = bildUrl;
-    System.out.println(this.vorname + this.nachname + this.bildUrl);
   }
 
   public void addRede(Rede rede) {
@@ -57,15 +54,6 @@ public class Person extends MongoDBDocument {
   public Integer getRedeCount(){
     return redeCount;
   }
-
-  public List<String> getBildUrl() {
-    return bildUrl;
-  }
-
-  public void setBildUrl(List<String> bildUrl) {
-    this.bildUrl = bildUrl;
-  }
-
   public String getName() {
     StringBuilder sb = new StringBuilder();
     if (titel != null) {
