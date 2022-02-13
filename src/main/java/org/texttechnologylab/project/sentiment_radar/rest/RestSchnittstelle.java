@@ -213,6 +213,30 @@ public class RestSchnittstelle {
         }
         return processNE(miscList, orgList, perList, locList);
     }
+    public static JSONObject processNEList(List<String> list, String listname) {
+        HashMap<String, Integer> NEMap = new HashMap<>();
+        JSONObject currJson = new JSONObject();
+        JSONObject finalJSON = new JSONObject();
+        List<JSONObject> NeJSONList = new ArrayList<>();
+        for (String string : list) {
+            if (!NEMap.containsKey(string)) {
+                NEMap.put(string, 1);
+            } else {
+                NEMap.replace(string, NEMap.get(string) + 1);
+            }
+        }
+        Iterator it = NEMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            currJson = new JSONObject();
+            currJson.put("element", pair.getKey());
+            currJson.put("count", pair.getValue());
+            NeJSONList.add(currJson);
+            it.remove();
+        }
+        finalJSON.put(listname,NeJSONList);
+        return finalJSON;
+    }
     public static JSONObject processNE(List<String> miscList, List<String> orgList, List<String> perList, List<String> locList) {
         List<List<String>> entityList = new ArrayList<>();
         JSONObject currJson = new JSONObject();
@@ -226,34 +250,21 @@ public class RestSchnittstelle {
         int counter2 = 0;
         for (List<String> list : entityList) {
             if (counter2 == 0) {
-                currJson.put("type", "MISC");
-                currJson.put("count", list.size());
-                NEjson.add(currJson);
+                NEjson.add(processNEList(miscList, "MISC"));
             }
             if (counter2 == 1) {
-                currJson = new JSONObject();
-                currJson.put("type", "ORG");
-                currJson.put("count", list.size());
-                NEjson.add(currJson);
+                NEjson.add(processNEList(miscList, "ORG"));
             }
             if (counter2 == 2) {
-                currJson = new JSONObject();
-                currJson.put("type", "PER");
-                currJson.put("count", list.size());
-                NEjson.add(currJson);
+                NEjson.add(processNEList(miscList, "PER"));
             }
             if (counter2 == 3) {
-                currJson = new JSONObject();
-                currJson.put("type", "LOC");
-                currJson.put("count", list.size());
-                NEjson.add(currJson);
+                NEjson.add(processNEList(miscList, "LOC"));
             }
             counter2 += 1;
         }
         NEJsonList.put("result", NEjson);
         return NEJsonList;
-
-
     }
     public static JSONObject getAllSentimentwithCount(String fraktion) {
         List<Document> RedeList = findSpeechByFraction(fraktion);
