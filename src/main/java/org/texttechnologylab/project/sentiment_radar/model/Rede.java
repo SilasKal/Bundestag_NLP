@@ -3,6 +3,7 @@ package org.texttechnologylab.project.sentiment_radar.model;
 import org.texttechnologylab.project.sentiment_radar.abstracts.MongoDBDocument;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,15 +15,15 @@ public class Rede extends MongoDBDocument {
   public static final String MONGO_DB_COLLECTION_NAME = "Reden";
   private String text;
   private Person redner;
-  private String datum;
+  private Date datum;
   private Tagesordnungspunkt tagesordnungspunkt;
   private List<Kommentar> kommentare = new ArrayList<>();
 
-  public String getDatum() {
+  public Date getDatum() {
     return datum;
   }
 
-  public void setDatum(String datum) {this.datum = datum;}
+  public void setDatum(Date datum) {this.datum = datum;}
 
   public String getText() {
     return text;

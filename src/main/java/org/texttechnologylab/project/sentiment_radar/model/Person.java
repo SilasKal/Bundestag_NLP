@@ -22,7 +22,9 @@ public class Person extends MongoDBDocument {
   private String rolleKurz;
   private String rolleName;
   private String titel;
-  private List<String> bildUrl;
+  private List<String> bildUrl = new ArrayList<>();
+  private Integer redeCount = 0;
+
   public Person() {
   }
 
@@ -35,12 +37,13 @@ public class Person extends MongoDBDocument {
     this.rolleKurz = rolleKurz;
     this.rolleName = rolleName;
     this.titel = titel;
-    this.bildUrl = ImgUrlGetter.get_pic_url(vorname, nachname);
+    this.bildUrl = bildUrl;
     System.out.println(this.vorname + this.nachname + this.bildUrl);
   }
 
   public void addRede(Rede rede) {
     if (rede != null) {
+      redeCount += 1;
       this.reden.add(rede);
       rede.setRedner(this);
     }
@@ -50,6 +53,9 @@ public class Person extends MongoDBDocument {
     if (kommentar != null) {
       this.kommentare.add(kommentar);
     }
+  }
+  public Integer getRedeCount(){
+    return redeCount;
   }
 
   public List<String> getBildUrl() {

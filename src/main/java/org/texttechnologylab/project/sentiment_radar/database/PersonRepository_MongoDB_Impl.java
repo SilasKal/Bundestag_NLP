@@ -47,6 +47,7 @@ public class PersonRepository_MongoDB_Impl implements AbstractRepository<Person>
     document.append("rolle_name", person.getRolleName());
     document.append("titel", person.getTitel());
     document.append("bild_url", person.getBildUrl());
+    document.append("rede_Count", person.getRedeCount());
     String fraktion = null;
     if (person instanceof Abgeordneter) {
       fraktion = ((Abgeordneter) person).getFraktion().name();

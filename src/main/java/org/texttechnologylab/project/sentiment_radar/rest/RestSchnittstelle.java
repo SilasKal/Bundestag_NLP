@@ -16,26 +16,57 @@ import static spark.Spark.*;
 
 public class RestSchnittstelle {
     public static void main(String[] args) {
-        get("/token/all", (req, res) -> getAllTokenwithCount(""));
         get("/speeches/all", (req, res) -> getAllSpeeches());
-        get("/ne/all", (req, res) -> getAllNEwithCount(""));
-        get("/sentiment/all", (req, res) -> getAllSentimentwithCount(""));
-        get("/pos/all", (req, res) -> getAllPoswithCount(""));
         get("/speeches/count", (req, res) -> getSpeechesCount(""));
         get("/token/:fraktion", (req, res) ->  {
             return getAllTokenwithCount(req.params(":fraktion"));
         });
+        get("/token/:fraktion/:startdate/:enddate", (req, res) ->  {
+            return getAllTokenwithCount(req.params("fraktion"));
+        });
         get("/ne/:fraktion", (req, res) ->  {
+            if (req.params(":fraktion").equals("all")) {
+                return getAllNEwithCount("");
+            }
+            return getAllNEwithCount(req.params(":fraktion"));
+        });
+        get("/ne/:fraktion/:startdate/:enddate", (req, res) ->  {
+            if (req.params(":fraktion").equals("all")) {
+                return getAllNEwithCount("");
+            }
             return getAllNEwithCount(req.params(":fraktion"));
         });
         get("/sentiment/:fraktion", (req, res) ->  {
+            if (req.params(":fraktion").equals("all")) {
+                return getAllSentimentwithCount("");
+            }
+            return getAllSentimentwithCount(req.params(":fraktion"));
+        });
+        get("/sentiment/:fraktion/:startdate/:enddate", (req, res) ->  {
+            if (req.params(":fraktion").equals("all")) {
+                return getAllSentimentwithCount("");
+            }
             return getAllSentimentwithCount(req.params(":fraktion"));
         });
         get("/pos/:fraktion", (req, res) ->  {
+            if (req.params(":fraktion").equals("all")) {
+                return getAllPoswithCount("");
+            }
             return getAllPoswithCount(req.params(":fraktion"));
+        });
+        get("/pos/:fraktion/:startdate/:enddate", (req, res) ->  {
+            System.out.println(req.params("startdate") + req.params("enddate"));
+            return getAllPoswithCount(req.params("fraktion"));
+        });
+        get("/speaker/:fraktion", (req, res) ->  {
+            if (req.params(":fraktion").equals("all")) {
+                return "hi";  // TODO alle Redner mit redencount url und name
+            }
+            return "hallo"; // TODO redner nach fraktion mit redencount url und name
         });
         enableCORS("*","*","*");  // enables hosting server and making client requests
     }
+
     public static List<Document> findSpeechByFraction(String fraktion) {
         if (fraktion.equals("")) {
             RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
@@ -46,7 +77,6 @@ public class RestSchnittstelle {
             PersonRepository_MongoDB_Impl personRepository_mongoDB_ = new PersonRepository_MongoDB_Impl();
             List<Person> personen = personRepository_mongoDB_.findPersonByFraction(fraktion);
             RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
-            List <Document> filteredReden = new ArrayList<>();
             List<Document> reden = new ArrayList<>();
             for (Person person : personen){
                 reden.addAll(redeRepository_mongoDB_.findByRednerId(person.getId()));
@@ -55,11 +85,8 @@ public class RestSchnittstelle {
             for (Document redei : reden){
                 redenids.add(redei.getObjectId("_id"));
             }
-            for (ObjectId redenid:redenids) {
-                filteredReden.addAll(redeRepository_mongoDB_.findByRedeId(redenid));
-            }
             System.out.println("fertig mit Filtern");
-            return filteredReden;
+            return redeRepository_mongoDB_.findByRedeIdList(redenids);
         }
     }
     public static List<String> getAllSpeeches() {
@@ -150,7 +177,6 @@ public class RestSchnittstelle {
                 currJson.put("type", "MISC");
                 currJson.put("count", list.size());
                 NEjson.add(currJson);
-
             }
             if (counter2 == 1) {
                 currJson = new JSONObject();

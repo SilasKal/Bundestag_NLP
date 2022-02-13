@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -80,6 +82,7 @@ public final class PlenarsitzungParser {
   private static Rede parseRede(Element redeElement, String datum) {
     Rede rede = new Rede();
 
+
     // Setze Redner
     Person redner = parseRednerElement((Element) redeElement.getElementsByTagName("redner").item(0));
     redner.addRede(rede);
@@ -97,7 +100,14 @@ public final class PlenarsitzungParser {
         }
       }
     }
-    rede.setDatum(datum);
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    Date date;
+    try {
+      date = simpleDateFormat.parse(datum);
+    }catch (Exception e) {
+      date = null;
+    }
+    rede.setDatum(date);
     rede.setText(redenText.toString());
 
     // Hole alle Kommentare der Rede
