@@ -31,7 +31,11 @@ public class RedeRepository_MongoDB_Impl implements AbstractRepository<Rede> {
       reden.add(getObject(document));
     }
     return reden;
-  }  
+  }
+  /**
+   * @author Silas
+   * returns list of speeches that match given rednerId
+   */
   public List<Document> findByRednerId(ObjectId rednerId) {
     List<Document> reden = new ArrayList<>();
     for (Document document:getCollectionbyName2("Reden").find(Filters.eq("redner_id", rednerId))) {
@@ -39,6 +43,10 @@ public class RedeRepository_MongoDB_Impl implements AbstractRepository<Rede> {
     }
     return reden;
   }
+  /**
+   * @author Silas
+   * returns count of speeches that match given rednerId
+   */
   public Integer findByRednerIdCount(ObjectId rednerId) {
     int counter = 0;
     for (Document document : getCollectionbyName2("Reden").find(Filters.eq("redner_id", rednerId))) {
@@ -46,11 +54,18 @@ public class RedeRepository_MongoDB_Impl implements AbstractRepository<Rede> {
     }
     return counter;
   }
-
+  /**
+   * @author Silas
+   * returns all speeches currently in database
+   */
   public List<Document> findallRede() {
     List <Document> redeList = getCollectionbyName("Reden");
     return redeList;
   }
+  /**
+   * @author Silas
+   * returns list of speeches that match given redeIds
+   */
   public List<Document> findByRedeIdList(List<ObjectId> redeIdList) {
     List<Document> reden = new ArrayList<>();
     for (Document document : getCollectionbyName2("Reden").find(Filters.in("_id", redeIdList))) {
@@ -58,6 +73,10 @@ public class RedeRepository_MongoDB_Impl implements AbstractRepository<Rede> {
     }
     return reden;
   }
+  /**
+   * @author Silas
+   * returns speech that matches given redeId
+   */
   public List<Document> findByRedeId(ObjectId redeId) {
     List<Document> reden = new ArrayList<>();
     for (Document document : getCollectionbyName2("Reden").find(Filters.eq("_id", redeId))) {

@@ -3,6 +3,7 @@ package org.texttechnologylab.project.sentiment_radar.rest;
 import org.apache.logging.log4j.core.pattern.AbstractStyleNameConverter;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONObject;
 import org.texttechnologylab.project.sentiment_radar.database.PersonRepository_MongoDB_Impl;
 import org.texttechnologylab.project.sentiment_radar.database.RedeRepository_MongoDB_Impl;
@@ -13,11 +14,19 @@ import java.util.*;
 
 import static spark.Spark.*;
 
-
-
+/**
+ * This class provides the implementation of the REST port,
+ * it processes NLP data in the database to return relevant
+ * information
+ * @author Silas
+ * @see org.texttechnologylab.project.sentiment_radar.database.MongoDBConnectionHandler
+ */
 public class RestSchnittstelle {
+    /**
+     * @author Silas
+     * TODO java doc
+     */
     public static void main(String[] args) {
-        get("/speeches/all", (req, res) -> getAllSpeeches());
         get("/speeches/count", (req, res) -> getSpeechesCount(""));
         get("/token/:fraktion", (req, res) ->  {
             if (req.params(":fraktion").equals("all")) {
@@ -73,6 +82,10 @@ public class RestSchnittstelle {
         });
         enableCORS("*","*","*");  // enables hosting server and making client requests
     }
+    /**
+     * @author Silas
+     * calculates speech count for speakers in a given fraction
+     */
     public static JSONObject findSpeakerbyFraction(String fraktion) {
         if (fraktion.equals("")) {
             PersonRepository_MongoDB_Impl personRepository_mongoDB_ = new PersonRepository_MongoDB_Impl();
@@ -125,6 +138,10 @@ public class RestSchnittstelle {
             return finalJson;
         }
     }
+    /**
+     * @author Silas
+     * returns list of all speeches for given fraction
+     */
     public static List<Document> findSpeechByFraction(String fraktion) {
         if (fraktion.equals("")) {
             RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
@@ -148,21 +165,22 @@ public class RestSchnittstelle {
             return redeRepository_mongoDB_.findByRedeIdList(redenids);
         }
     }
-    public static List<String> getAllSpeeches() {
-        RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
-        List<Document> RedeList = redeRepository_mongoDB_.findallRede();
-        List<String> JsonList = new ArrayList<>();
-        for (Document document : RedeList) {
-            JsonList.add(document.toJson());
-        }
-        return JsonList;
-    }
+    /**
+     * @author Silas
+     * returns JSON with count speeches currently in database
+     */
     public static JSONObject getSpeechesCount(String fraktion) {
         List<Document> RedeList = findSpeechByFraction(fraktion);
         JSONObject JSONfinal = new JSONObject();
         JSONfinal.put("count", RedeList.size());
         return JSONfinal;
     }
+    /**
+     * @author Silas
+     * iterates over all speeches of a given fraction and
+     * passes all the tokens to processToken
+     * @see RestSchnittstelle#processToken
+     */
     public static JSONObject getAllTokenwithCount(String fraktion) {
         List<Document> RedeList = findSpeechByFraction(fraktion);
         List<String> TokenList = new ArrayList<>();
@@ -179,6 +197,11 @@ public class RestSchnittstelle {
         System.out.println("finished List");
         return processToken(TokenList);
     }
+    /**
+     * @author Silas
+     * calculates the count of every element in tokenList
+     * and returns a JSON with the calculated information
+     */
     public static JSONObject processToken(List<String> tokenList) {
         System.out.println("process" + tokenList.size());
         ArrayList<JSONObject> TokenJsonList = new ArrayList<>();
@@ -208,6 +231,12 @@ public class RestSchnittstelle {
         return TokenJsonFinal;
 
     }
+    /**
+     * @author Silas
+     * iterates over all speeches of a given fraction and
+     * passes all the namedentities to processNE
+     * @see RestSchnittstelle#processNE
+     */
     public static JSONObject getAllNEwithCount(String fraktion) {
         List<Document> RedeList = findSpeechByFraction(fraktion);
         List<String> miscList = new ArrayList<>();
@@ -226,6 +255,11 @@ public class RestSchnittstelle {
         }
         return processNE(miscList, orgList, perList, locList);
     }
+    /**
+     * @author Silas
+     * calculates the count of every element in list
+     * and returns a JSON with the calculated information
+     */
     public static JSONObject processNEList(List<String> list, String listname) {
         HashMap<String, Integer> NEMap = new HashMap<>();
         JSONObject currJson = new JSONObject();
@@ -250,6 +284,11 @@ public class RestSchnittstelle {
         finalJSON.put(listname,NeJSONList);
         return finalJSON;
     }
+    /**
+     * @author Silas
+     * merges all JSONs with the token count to one JSON containing
+     * all relevant information
+     */
     public static JSONObject processNE(List<String> miscList, List<String> orgList, List<String> perList, List<String> locList) {
         List<List<String>> entityList = new ArrayList<>();
         JSONObject currJson = new JSONObject();
@@ -279,6 +318,12 @@ public class RestSchnittstelle {
         NEJsonList.put("result", NEjson);
         return NEJsonList;
     }
+    /**
+     * @author Silas
+     * iterates over all speeches of a given fraction and
+     * passes all the sentiments to processSentiment
+     * @see RestSchnittstelle#processSentiment
+     */
     public static JSONObject getAllSentimentwithCount(String fraktion) {
         List<Document> RedeList = findSpeechByFraction(fraktion);
         List<Double> SentimentList = new ArrayList<>();
@@ -293,6 +338,11 @@ public class RestSchnittstelle {
         }
         return processSentiment(SentimentList);
     }
+    /**
+     * @author Silas
+     * calculates the count of every element in SentimentList
+     * and returns a JSON with the calculated information
+     */
     public static JSONObject processSentiment(List<Double> SentimentList) {
         HashMap<String, Integer> sentimentMap = new HashMap<>();
         List<JSONObject> SentimentJsonList = new ArrayList<>();
@@ -317,6 +367,12 @@ public class RestSchnittstelle {
         finalJSON.put("result", SentimentJsonList);
         return finalJSON;
     }
+    /**
+     * @author Silas
+     * iterates over all speeches of a given fraction and
+     * passes all the pos to processPos
+     * @see RestSchnittstelle#processPos
+     */
     public static JSONObject getAllPoswithCount(String fraktion) {
         List<Document> RedeList = findSpeechByFraction(fraktion);
         List<String> PosList = new ArrayList<>();
@@ -329,6 +385,11 @@ public class RestSchnittstelle {
         }
         return processPos(PosList);
     }
+    /**
+     * @author Silas
+     * calculates the count of every element in poslist
+     * and returns a JSON with the calculated information
+     */
     public static JSONObject processPos(List<String> PosList) {
         HashMap<String, Integer> posMap = new HashMap<>();
         List<String> JsonPos = new ArrayList<>();
@@ -354,6 +415,10 @@ public class RestSchnittstelle {
         finalJSON.put("result", POSJSONList);
         return finalJSON;
     }
+    /**
+     * @author Ben
+     * TODO java doc
+     */
     private static void enableCORS(final String origin, final String methods, final String headers) {
 
         options("/*", (request, response) -> {

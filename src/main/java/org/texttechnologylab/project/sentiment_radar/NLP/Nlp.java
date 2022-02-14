@@ -24,11 +24,16 @@ import java.util.List;
 
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
-
+/**
+ * This class provides the implementation of the NLP and inserts the analysed data into the database
+ * @author Silas
+ * @see org.texttechnologylab.project.sentiment_radar.database.MongoDBConnectionHandler
+ */
 public class Nlp {
-        /**
-         * Getting NLP data from speeches
-         */
+    /**
+     * @author Silas
+     * gives needed information to NLP function to analyse the given speech
+     */
     public static void main(String[] args) {
         NLPprocess();
     }
@@ -49,6 +54,11 @@ public class Nlp {
 //            counter +=1;
         }
     }
+    /**
+     * @author Silas
+     * converts given document into JCas with German as language
+     * @param doc document which should be converted
+     */
     public static JCas RedetoJCas(Document doc) {
         JCas jCas = null;
         try {
@@ -58,6 +68,11 @@ public class Nlp {
         }
         return jCas;
     }
+    /**
+     * @author Silas
+     * analyses given JCas document
+     * inspired by slides from Giuseppe Abrami
+     */
     public static void NLP(JCas jCas, ObjectId objectId) {
         List<String> MiscList = new ArrayList<>();
         List<String> OrgList = new ArrayList<>();
