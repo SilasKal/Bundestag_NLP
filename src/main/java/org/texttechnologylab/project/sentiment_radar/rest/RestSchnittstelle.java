@@ -266,13 +266,13 @@ public class RestSchnittstelle {
                 NEjson.add(processNEList(miscList, "MISC"));
             }
             if (counter2 == 1) {
-                NEjson.add(processNEList(miscList, "ORG"));
+                NEjson.add(processNEList(orgList, "ORG"));
             }
             if (counter2 == 2) {
-                NEjson.add(processNEList(miscList, "PER"));
+                NEjson.add(processNEList(perList, "PER"));
             }
             if (counter2 == 3) {
-                NEjson.add(processNEList(miscList, "LOC"));
+                NEjson.add(processNEList(locList, "LOC"));
             }
             counter2 += 1;
         }
