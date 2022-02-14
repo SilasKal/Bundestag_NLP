@@ -20,9 +20,15 @@ public class RestSchnittstelle {
         get("/speeches/all", (req, res) -> getAllSpeeches());
         get("/speeches/count", (req, res) -> getSpeechesCount(""));
         get("/token/:fraktion", (req, res) ->  {
+            if (req.params(":fraktion").equals("all")) {
+                return getAllTokenwithCount("");
+            }
             return getAllTokenwithCount(req.params(":fraktion"));
         });
         get("/token/:fraktion/:startdate/:enddate", (req, res) ->  {
+            if (req.params(":fraktion").equals("all")) {
+                return getAllTokenwithCount("");
+            }
             return getAllTokenwithCount(req.params("fraktion"));
         });
         get("/ne/:fraktion", (req, res) ->  {
@@ -123,6 +129,7 @@ public class RestSchnittstelle {
         if (fraktion.equals("")) {
             RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
             List <Document> redenList = redeRepository_mongoDB_.getCollectionbyName("Reden");
+            System.out.println("fertig mit redelist");
             return redenList;
         }else {
             System.out.println("Die fraktion "+ fraktion + "wird gesucht");
@@ -157,10 +164,12 @@ public class RestSchnittstelle {
         return JSONfinal;
     }
     public static JSONObject getAllTokenwithCount(String fraktion) {
-        RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
         List<Document> RedeList = findSpeechByFraction(fraktion);
         List<String> TokenList = new ArrayList<>();
+        int counter = 0;
         for (Document document: RedeList) {
+            counter +=1;
+            System.out.println(counter);
             try {
                 TokenList.addAll(document.getList("tokenList", String.class));
             }catch (Exception e) {
@@ -171,11 +180,15 @@ public class RestSchnittstelle {
         return processToken(TokenList);
     }
     public static JSONObject processToken(List<String> tokenList) {
+        System.out.println("process" + tokenList.size());
         ArrayList<JSONObject> TokenJsonList = new ArrayList<>();
         JSONObject TokenJsonFinal = new JSONObject();
         HashMap<String, Integer> tokenMap = new HashMap<>();
         JSONObject currJson = new JSONObject();
+        int counter = 0;
         for (String string:tokenList) {
+            counter +=1;
+            System.out.println(counter);
             if (!tokenMap.containsKey(string)) {
                 tokenMap.put(string, 1);
             } else {

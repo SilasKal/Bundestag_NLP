@@ -79,8 +79,10 @@ public interface AbstractRepository<T extends MongoDBDocument> {
     List<Document> documentList = new ArrayList<>();
     MongoCollection collection = MongoDBConnectionHandler.getInstance().getCollection(collectionname);
     MongoCursor<Document> cursor = collection.find().iterator();
+    int counter = 0;
     try {
-      while (cursor.hasNext()) {
+      while (cursor.hasNext() & counter <=10000) {
+        counter += 1;
         documentList.add(cursor.next());
       }
     } finally {
