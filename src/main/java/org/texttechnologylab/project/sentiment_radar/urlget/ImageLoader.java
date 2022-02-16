@@ -8,8 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
-@author Ben Schäfer
- enables DB-Connection and then loads all images from the website into the DB.
+* @author Ben Schäfer
+ * enables DB-Connection and then loads all images from the website into the DB.
  */
 public class ImageLoader {
     MongoDatabase database;

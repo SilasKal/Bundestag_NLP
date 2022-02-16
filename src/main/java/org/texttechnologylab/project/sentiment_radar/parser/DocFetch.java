@@ -26,30 +26,9 @@ public class DocFetch {
     }
 
     counter =0;
-//    for (String link:linkliste19) {
-//      download(link, "C:/Users/Silas/Desktop/Protokolle/Protkoll" + "19_" + counter +".xml");
-//      counter +=1;
-//    }
-//    counter = 0;
-//    for (String link:linkliste20) {
-//      download(link, "C:/Users/Silas/Desktop/Protokolle/Protkoll" + "20_" + counter +".xml");
-//      counter +=1;
-//    }
     linkliste19.addAll(linkliste20);
     return linkliste19;
   }
-//  public static void download(String urlstring, String filestr) throws Exception {
-//    URL url = new URL(urlstring);
-//    BufferedInputStream bufferedInputStream = new BufferedInputStream(url.openStream());
-//    FileOutputStream fileOutputStream = new FileOutputStream(filestr);
-//    byte [] buffer = new byte[1024];
-//    int count = 0;
-//    while ((count = bufferedInputStream.read(buffer,0,1024))!= -1) {
-//      fileOutputStream.write(buffer,0,count);
-//    }
-//    fileOutputStream.close();
-//    bufferedInputStream.close();
-//  }
   public static ArrayList<String> getprotokolllinks(ArrayList<String> linkliste, String url, int wahlperiode) {
     int counter = 0;
     ArrayList<String> returnlist = new ArrayList<>();
@@ -62,8 +41,7 @@ public class DocFetch {
       }
       return linkliste;
     } catch (Exception e) {
-      e.printStackTrace();
-      System.out.println("Fehler beim Aufruf der Website");
+      System.out.println("Website überlastet");
       return returnlist;
     }
   }

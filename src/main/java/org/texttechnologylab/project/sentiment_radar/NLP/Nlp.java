@@ -34,9 +34,6 @@ public class Nlp {
      * @author Silas
      * gives needed information to NLP function to analyse the given speech
      */
-    public static void main(String[] args) {
-        NLPprocess();
-    }
     public static void NLPprocess() {
         RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
         List <Document> documentList = redeRepository_mongoDB_.findallRede();
@@ -45,13 +42,6 @@ public class Nlp {
             System.out.println(counter);
             NLP(RedetoJCas(document), document.getObjectId("_id"));
             counter +=1;
-//            if (counter >= 5000) {
-//                System.out.println(counter);
-//                NLP(RedetoJCas(document), document.getObjectId("_id"));
-//                counter +=1;
-//            }
-//            System.out.println(counter);
-//            counter +=1;
         }
     }
     /**

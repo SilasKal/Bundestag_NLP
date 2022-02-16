@@ -34,8 +34,6 @@ public class Person extends MongoDBDocument {
     this.rolleKurz = rolleKurz;
     this.rolleName = rolleName;
     this.titel = titel;
-    // this.bildUrl = ImgUrlGetter.get_pic_url(vorname, nachname);
-    System.out.println(this.vorname + this.nachname + this.bildUrl);
   }
 
   public void addRede(Rede rede) {

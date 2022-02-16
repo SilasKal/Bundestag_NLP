@@ -80,7 +80,8 @@ public interface AbstractRepository<T extends MongoDBDocument> {
     int counter = 0;
     try {
       while (cursor.hasNext()) {
-        counter = +1;
+        cursor.next();
+        counter += 1;
       }
     } finally {
       cursor.close();
