@@ -1,4 +1,5 @@
 
+// @author Ben Schäfer
 // Enables you to search by clicking "ENTER"
 var input = document.getElementById("SearchVal");
 input.addEventListener("keydown", function (e) {
@@ -9,7 +10,7 @@ input.addEventListener("keydown", function (e) {
     }
 })
 
-
+// @author Ben Schäfer
 // creates a chart of desired type at desired location,fitting to one of the categories demanded in 3b)
 class ChangeableChart {
     constructor(name, chart_type, parent, fraction) {
@@ -19,6 +20,7 @@ class ChangeableChart {
         this.frame = this.build_html(name, chart_type);
         parent.appendChild(this.frame);
     }
+    // @author Ben Schäfer
     // get frame for chart from template and write it to the actual html
     build_html(name, chart_type) {
         const chart_temp = document.getElementsByTagName("template")[1];
@@ -27,7 +29,6 @@ class ChangeableChart {
         if (name == "all") {
             clone.querySelector("h6[name='title']").innerHTML = "Übersicht";
         }
-
         // adds a listener for changes in the date frame
         clone.querySelector("form[name='DateBoard']").addEventListener("change", function (e) {
             e.preventDefault();
@@ -44,7 +45,7 @@ class ChangeableChart {
         this.chart = chartCreator(clone.querySelector("canvas"), chart_type);
         return clone;
     }
-
+    // @author Ben Schäfer
     // load data from API and write it to the chart for token, pos and sentiments
     async update_info(item) {
         console.log("waiting")
@@ -71,6 +72,7 @@ class ChangeableChart {
         console.log(type_list);
     }
 
+    // @author Ben Schäfer
     // Update the info manually (necessary for named entities and speakers)
     update_only_info(types, counts) {
         this.chart.data.labels = types;
@@ -84,6 +86,7 @@ class ChangeableChart {
 
 }
 
+// @author Ben Schäfer
 //wandelt in europäisches Datum
 function make_eu(date) {
     console.log(date);
@@ -92,6 +95,7 @@ function make_eu(date) {
 }
 
 
+// @author Ben Schäfer
 // creates for every category a Chart
 async function build_board(parent, fraction) {
     var type_list = ["line", "bar", "radar", "line", "bar"]
@@ -136,6 +140,7 @@ async function build_board(parent, fraction) {
 
 }
 
+// @author Ben Schäfer
 // Enables you to update the DB-Progress-Bar
 async function show_db_progress() {
     console.log("checking db...")

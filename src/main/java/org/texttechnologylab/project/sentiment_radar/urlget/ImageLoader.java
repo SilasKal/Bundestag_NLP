@@ -7,7 +7,10 @@ import org.bson.conversions.Bson;
 import java.util.Iterator;
 import java.util.List;
 
-
+/**
+@author Ben Schäfer
+ enables DB-Connection and then loads all images from the website into the DB.
+ */
 public class ImageLoader {
     MongoDatabase database;
     public ImageLoader() {
@@ -22,6 +25,12 @@ public class ImageLoader {
         MongoDatabase db = client.getDatabase("PRG_WiSe21_Gruppe_7_1");
         this.database = db;
     }
+
+    /**
+     * @author Ben Schäfer
+     * searches for portrait-pics and if there are any on the website,
+     * adds an entry to the corresponding speaker in the Db
+     */
     public void add_all_imgs() {
         MongoCollection coll = this.database.getCollection("Personen");
         // coll.insertOne(new Document().append("dies", "das"));

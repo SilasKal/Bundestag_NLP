@@ -11,6 +11,11 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * @author Ben Schäfer
+ * makes a portrait-search on the bundestag-website.
+ * If there are any to be found it saves them and their Meta-Data and returns them.
+ */
 public class SiteScanner {
 
     public static List<String> get_pic_url(String first_name, String last_name) {

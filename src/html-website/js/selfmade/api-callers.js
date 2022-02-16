@@ -1,4 +1,5 @@
 
+// @author Ben Schäfer
 //makes an ajax to the API-Server running on localhost with the requested url
 class ApiHandler {
     constructor() {
@@ -19,9 +20,6 @@ class ApiHandler {
                 }
             })
         })
-    }
-    decode_json(json) {
-
     }
 }
 

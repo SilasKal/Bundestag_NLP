@@ -1,4 +1,5 @@
 
+// @author Ben Schäfer
 // Creates DashBoard if searched input equals a fraction-name
 function search_for_fraction(input) {
     if (["SPD", "AFD", "DIE_LINKE", "FDP", "BUENDNIS_90_DIE_GRUENEN", "CDU_CSU"].includes(input)) {
@@ -10,6 +11,7 @@ function search_for_fraction(input) {
     }
 }
 
+// @author Ben Schäfer
 // Creates from Template a board that fits to a party name
 function showTemplate(name) {
     var t = document.getElementsByTagName("template")[0];

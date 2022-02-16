@@ -1,10 +1,11 @@
 
+// @author Ben Schäfer
 // Eine Funktion die ein Chart eines wählbaren Typs erstellt
 function chartCreator(writeTo, type) {
     var theChart = new Chart(writeTo, {
         type: type,
         data: {
-            labels: ["Bitte", "etwas", "eingeben"],
+            labels: ["Bitte", "etwas", "warten"],
             datasets: [{
                 data: [33, 33, 33],
                 backgroundColor: ['#dfd84e', '#1c39c8', '#36cc77'],
