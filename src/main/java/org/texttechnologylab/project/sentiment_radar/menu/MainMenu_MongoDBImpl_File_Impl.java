@@ -12,7 +12,7 @@ public class MainMenu_MongoDBImpl_File_Impl extends Menu_MongoDB_Impl {
   /**
    * This Class contains functions to run a menu, in which the user can choose options.
    */
-  private final int MENU_LENGTH = 4;
+  private final int MENU_LENGTH = 7;
 
   public MainMenu_MongoDBImpl_File_Impl(List<Sitzung> sitzungen) {
     super(sitzungen);
@@ -30,6 +30,9 @@ public class MainMenu_MongoDBImpl_File_Impl extends Menu_MongoDB_Impl {
     System.out.println("2 -- Länge der durchschnittlichen Redebeiträge");
     System.out.println("3 -- Redebeiträge mit den meisten Zurufen");
     System.out.println("4 -- In DB uebernehmen");
+    System.out.println("5 -- NLP starten");
+    System.out.println("6 -- Rest Starten");
+    System.out.println("7 -- Bild URLs holen");
     System.out.println("0 -- Programm beenden");
   }
 
@@ -54,6 +57,18 @@ public class MainMenu_MongoDBImpl_File_Impl extends Menu_MongoDB_Impl {
         break;
       case 4:
         upload();
+        break;
+      case 5:
+        NLPMenu_MongoDBImpl_File_Impl nlpMenu = new NLPMenu_MongoDBImpl_File_Impl(sitzungen);
+        nlpMenu.runMenu();
+        break;
+      case 6:
+        RestMenu_MongoDBImpl_File_Impl restMenu = new RestMenu_MongoDBImpl_File_Impl(sitzungen);
+        restMenu.runMenu();
+        break;
+      case 7:
+        URLMenu_MongoDBImpl_File_Impl urlMenu = new URLMenu_MongoDBImpl_File_Impl(sitzungen);
+        urlMenu.runMenu();
         break;
     }
   }
