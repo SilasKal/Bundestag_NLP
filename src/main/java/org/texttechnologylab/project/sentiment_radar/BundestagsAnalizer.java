@@ -3,7 +3,7 @@ package org.texttechnologylab.project.sentiment_radar;
 import org.texttechnologylab.project.sentiment_radar.menu.MainMenu_MongoDBImpl_File_Impl;
 import org.texttechnologylab.project.sentiment_radar.model.Sitzung;
 import org.texttechnologylab.project.sentiment_radar.parser.PlenarsitzungParser;
-import org.texttechnologylab.project.sentiment_radar.parser.docFetch;
+import org.texttechnologylab.project.sentiment_radar.parser.DocFetch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class BundestagsAnalizer {
     /**
      * Diese Funktion liest alle XML Datein in Resourcen ein
      */
-    ArrayList<String> linkListe = new ArrayList<String>(new docFetch().urlCollector());
+    ArrayList<String> linkListe = new ArrayList<String>(new DocFetch().urlCollector());
     for (int i = 0; i < linkListe.size(); i++) {
       sitzungen.add(PlenarsitzungParser.parseXmlFile(linkListe.get(i)));
     }

@@ -6,7 +6,7 @@ import org.jsoup.nodes.Element;
 
 import java.util.ArrayList;
 
-public class docFetch {
+public class DocFetch {
   public static ArrayList<String> urlCollector() throws Exception{
     int counter = 0;
     ArrayList<String> linkliste19 = new ArrayList<>();
