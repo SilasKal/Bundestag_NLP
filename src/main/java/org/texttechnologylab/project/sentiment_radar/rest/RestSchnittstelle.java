@@ -171,9 +171,8 @@ public class RestSchnittstelle {
      */
     public static JSONObject getSpeechesCount(String fraktion) {
         RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
-        List<Document> RedeList = redeRepository_mongoDB_.findallRede();
         JSONObject JSONfinal = new JSONObject();
-        JSONfinal.put("count", RedeList.size());
+        JSONfinal.put("count", redeRepository_mongoDB_.getRedesize());
         return JSONfinal;
     }
     /**

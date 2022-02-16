@@ -74,6 +74,19 @@ public interface AbstractRepository<T extends MongoDBDocument> {
   default MongoCollection<Document> getCollectionbyName2(String collectionname) {
     return MongoDBConnectionHandler.getInstance().getCollection(collectionname);
   }
+  default int getCollectionSizebyName(String collectionname) {
+    MongoCollection collection = MongoDBConnectionHandler.getInstance().getCollection(collectionname);
+    MongoCursor<Document> cursor = collection.find().iterator();
+    int counter = 0;
+    try {
+      while (cursor.hasNext()) {
+        counter = +1;
+      }
+    } finally {
+      cursor.close();
+    }
+    return counter;
+  }
 
   default List<Document> getCollectionbyName(String collectionname) {
     List<Document> documentList = new ArrayList<>();
