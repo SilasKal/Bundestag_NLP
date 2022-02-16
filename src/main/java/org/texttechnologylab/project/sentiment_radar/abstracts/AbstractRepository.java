@@ -81,7 +81,7 @@ public interface AbstractRepository<T extends MongoDBDocument> {
     MongoCursor<Document> cursor = collection.find().iterator();
     int counter = 0;
     try {
-      while (cursor.hasNext() & counter <=10000) {
+      while (cursor.hasNext() & counter <=1000) {
         counter += 1;
         documentList.add(cursor.next());
       }

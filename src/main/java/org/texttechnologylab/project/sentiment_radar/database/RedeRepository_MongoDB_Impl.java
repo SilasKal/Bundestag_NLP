@@ -58,8 +58,9 @@ public class RedeRepository_MongoDB_Impl implements AbstractRepository<Rede> {
    * @author Silas
    * returns all speeches currently in database
    */
-  public List<Document> findallRede() {
-    List <Document> redeList = getCollectionbyName("Reden");
+  public MongoCollection findallRede() {
+    MongoCollection redeList = getCollectionbyName2("Reden");
+
     return redeList;
   }
   /**

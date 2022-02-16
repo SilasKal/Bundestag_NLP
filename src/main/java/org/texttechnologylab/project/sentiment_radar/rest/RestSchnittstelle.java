@@ -170,7 +170,8 @@ public class RestSchnittstelle {
      * returns JSON with count speeches currently in database
      */
     public static JSONObject getSpeechesCount(String fraktion) {
-        List<Document> RedeList = findSpeechByFraction(fraktion);
+        RedeRepository_MongoDB_Impl redeRepository_mongoDB_ = new RedeRepository_MongoDB_Impl();
+        List<Document> RedeList = redeRepository_mongoDB_.findallRede();
         JSONObject JSONfinal = new JSONObject();
         JSONfinal.put("count", RedeList.size());
         return JSONfinal;

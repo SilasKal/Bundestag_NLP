@@ -114,9 +114,9 @@ async function build_board(parent, fraction) {
             // build the multiple line-charts for every category
             for(let j=0; j<4; j++) {
                 console.log("Das ausgewählte Paket: ")
-                console.log(data.result[i][entities[i]]);
-                var words = data.result[i][entities[i]].map(function(json) {return json.element});
-                var counts = data.result[i][entities[i]].map(function(json) {return json.count});
+                console.log(data.result[j][entities[j]]);
+                var words = data.result[j][entities[j]].map(function(json) {return json.element});
+                var counts = data.result[j][entities[j]].map(function(json) {return json.count});
                 new ChangeableChart(entities[j], type_list[i], parent, fraction).update_only_info(words, counts);
             }
 
