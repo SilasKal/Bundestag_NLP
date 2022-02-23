@@ -8,6 +8,7 @@ import java.util.Objects;
 
 /**
  * Enthält Informationen zu Personen.
+ * @author Philipp
  */
 public class Person extends MongoDBDocument {
   public static final String MONGO_DB_COLLECTION_NAME = "Personen";

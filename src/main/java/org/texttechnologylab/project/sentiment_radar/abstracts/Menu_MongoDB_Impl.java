@@ -59,7 +59,7 @@ public abstract class Menu_MongoDB_Impl {
   /**
    * Funktion fragt einen Wert ab und überprüft ob dieser eine Valide Eingabe in das Menü ist. Dafür muss die Anzahl
    * der möglichen Menüpunkte übergeben werden.
-   *
+   * @author Philipp
    * @param length die Länge der Ausgabe
    * @return die gewählte Ausgabe
    */

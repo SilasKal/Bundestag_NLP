@@ -4,6 +4,7 @@ import java.util.Objects;
 
 /**
  * Abgeordnete sind Personen und können einer Fraktion angehören
+ * @author Philipp
  */
 public class Abgeordneter extends Person {
   private Fraktion fraktion;

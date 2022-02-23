@@ -13,6 +13,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class PersonRepository_MongoDB_Impl implements AbstractRepository<Person> {
+  /**
+   * Operations to Persons
+   * @author Philipp
+   * @param givenId
+   * @return
+   */
 
   public Optional<Person> findByGivenId(String givenId) {
     if (givenId == null) {

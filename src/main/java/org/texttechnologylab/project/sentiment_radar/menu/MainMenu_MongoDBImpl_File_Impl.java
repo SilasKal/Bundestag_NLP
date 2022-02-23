@@ -11,6 +11,7 @@ import java.util.List;
 public class MainMenu_MongoDBImpl_File_Impl extends Menu_MongoDB_Impl {
   /**
    * This Class contains functions to run a menu, in which the user can choose options.
+   * @author Philipp
    */
   private final int MENU_LENGTH = 7;
 

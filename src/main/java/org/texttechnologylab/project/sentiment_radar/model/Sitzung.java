@@ -8,6 +8,7 @@ import java.util.Objects;
 
 /**
  * Enthält mehrere Tagsordnungspunkte
+ * @author Philipp
  */
 public class Sitzung extends MongoDBDocument {
   public static final String MONGO_DB_COLLECTION_NAME = "Sitzungen";

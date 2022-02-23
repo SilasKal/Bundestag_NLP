@@ -24,6 +24,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class RedeRepository_MongoDB_Impl implements AbstractRepository<Rede> {
+  /**
+   * Operations for speeches
+   * @author Silas
+   * @param tagesordnungspunktId
+   * @return
+   */
 
   public List<Rede> findByTagesordnungspunktId(ObjectId tagesordnungspunktId) {
     List<Rede> reden = new ArrayList<>();

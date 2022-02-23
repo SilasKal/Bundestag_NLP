@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 /**
  * Untermenü für Abfragen die "Redner" returnen sollen.
+ * @author Philipp
  */
 public class AvgRede_File_Impl extends Menu_MongoDB_Impl {
   private final int MENU_LENGTH = 3;

@@ -7,6 +7,12 @@ import org.jsoup.nodes.Element;
 import java.util.ArrayList;
 
 public class DocFetch {
+  /**
+   * Creating url Strings to get protocols from the bundestags website
+   * @author Silas
+   * @return
+   * @throws Exception
+   */
   public static ArrayList<String> urlCollector() throws Exception{
     int counter = 0;
     ArrayList<String> linkliste19 = new ArrayList<>();

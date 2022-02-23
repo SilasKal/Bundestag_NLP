@@ -12,8 +12,7 @@ import java.util.List;
  * The BundestagsdAnalizer downloads and analyses minutes of Bundestags meetings.
  *
  * @author Philipp Dächert s3391912@stud.uni-frankfurt.de
- * Matrikelnummer: 7550687
- * @version 1.3
+ * @version 3.3
  */
 public class BundestagsAnalizer {
 

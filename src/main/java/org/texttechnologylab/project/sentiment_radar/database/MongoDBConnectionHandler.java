@@ -8,6 +8,10 @@ import org.bson.Document;
 import org.texttechnologylab.project.sentiment_radar.util.PropertyUtil;
 
 public class MongoDBConnectionHandler {
+  /**
+   * Connection Handler to a DB
+   * @author Philipp
+   */
   private MongoDatabase db;
 
   private static MongoDBConnectionHandler instance;

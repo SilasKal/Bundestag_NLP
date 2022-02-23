@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * Alle möglichen Fraktionen denen ein Abgeordneter angehören kann
+ * @author Philipp
  */
 public enum Fraktion {
   CDU_CSU("CDU/CSU"),

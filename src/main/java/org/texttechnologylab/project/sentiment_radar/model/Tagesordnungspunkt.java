@@ -8,6 +8,7 @@ import java.util.Objects;
 
 /**
  * Kann eine Vielzahl von Reden enthalten und ist einer Sitzung zugeordnet.
+ * @author Philipp
  */
 public class Tagesordnungspunkt extends MongoDBDocument {
   public static final String MONGO_DB_COLLECTION_NAME = "Tagesordnungspunkte";

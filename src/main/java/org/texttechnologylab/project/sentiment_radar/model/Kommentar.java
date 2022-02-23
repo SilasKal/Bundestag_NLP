@@ -8,6 +8,7 @@ import java.util.Objects;
 
 /**
  * Enthält Variablen die ein Kommentar haben kann.
+ * @author Philipp
  */
 public class Kommentar extends MongoDBDocument {
   public static final String MONGO_DB_COLLECTION_NAME = "Kommentar";

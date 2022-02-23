@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 public class ZurufeMenu_MongoDBImpl_File_Impl extends Menu_MongoDB_Impl {
   /**
    * Submenu to specify a request regarding comments.
+   * @author Philipp
    */
   private final int MENU_LENGTH = 4;
 

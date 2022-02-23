@@ -12,7 +12,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class TagesordnungspunkteRepository_MongoDB_Impl implements AbstractRepository<Tagesordnungspunkt> {
-
+  /**
+   * Operations to Tagesordnungspunkten
+   * @author Philipp
+   * @param tagesordnungspunktId
+   * @return
+   */
   public List<Tagesordnungspunkt> findBySitzungsId(ObjectId tagesordnungspunktId) {
     List<Tagesordnungspunkt> tagesordnungspunkte = new ArrayList<>();
     for (Document document : getCollection().find(Filters.eq("_id", tagesordnungspunktId))) {

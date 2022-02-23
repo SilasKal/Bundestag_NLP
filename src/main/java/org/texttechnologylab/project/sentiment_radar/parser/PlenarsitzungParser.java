@@ -21,7 +21,6 @@ import java.util.Locale;
 /**
  * Parst alle Daten in Resource/xml/data
  * @author Philipp Dächert
- * Matrikelnummer 7550687
  */
 public final class PlenarsitzungParser {
 

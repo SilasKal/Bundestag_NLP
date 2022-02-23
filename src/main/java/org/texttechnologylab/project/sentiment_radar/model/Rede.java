@@ -10,6 +10,7 @@ import java.util.Objects;
 /**
  * Enthält Informationen zu einer Rede.
  * Kann eine Vielzahl von Kommentaren beinhalten.
+ * @author Philipp
  */
 public class Rede extends MongoDBDocument {
   public static final String MONGO_DB_COLLECTION_NAME = "Reden";

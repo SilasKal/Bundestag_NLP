@@ -16,6 +16,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class KommentarRepository_MongoDB_Impl implements AbstractRepository<Kommentar> {
+  /**
+   * Operations to Comments on Speeches
+   * @author Philipp
+   * @param personId
+   * @return
+   */
 
   public List<Kommentar> findByPersonId(ObjectId personId) {
     List<Kommentar> kommentare = new ArrayList<>();

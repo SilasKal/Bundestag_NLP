@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 public class RednerMenu_MongoDBImpl_File_Impl extends Menu_MongoDB_Impl {
   /**
    * Submenu to specify a requests regarding speakers
+   * @author Philipp
    */
   private final int MENU_LENGTH = 3;
 

@@ -12,6 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AbstractRepository<T extends MongoDBDocument> {
+  /**
+   * Abstracts for MongoDB operations
+   * @author Philipp
+   * @return
+   */
   String getCollectionName();
 
   Document createDocument(T person);
